@@ -35,10 +35,10 @@
         .hero { text-align: center; padding: 80px 20px 40px; }
         .hero h1 { font-family: 'Outfit', sans-serif; font-size: 3.5rem; margin-bottom: 20px; color: var(--text-main); }
         
-        /* New Sub-heading style */
+        /* Sub-heading style */
         .sub-heading-bar {
             text-align: center;
-            background: #fff7ed; /* Light orange tint */
+            background: #fff7ed;
             padding: 20px;
             margin: 20px auto 60px;
             border-radius: var(--radius);
@@ -57,7 +57,7 @@
     <header>
         <div class="container nav-flex">
             <div class="logo">
-                <img src="wae-logo.jpg" alt="WAE Logo" style="height:40px; border-radius:8px;">
+                <img src="wae-logo.jpg" alt="WAE" style="height:40px; border-radius:8px;">
                 <span>WAE</span>
             </div>
             <nav>
@@ -110,11 +110,7 @@
             <div style="margin-top:60px;">
                 <h2 style="font-family:'Outfit'; text-align:center; margin-bottom:40px;">Leadership</h2>
                 <div id="founders-list-disp" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px;">
-                    </div>
-
-                <h2 style="font-family:'Outfit'; text-align:center; margin-top:60px; margin-bottom:40px;">Core Team</h2>
-                <div id="team-list-disp" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:30px;">
-                     </div>
+                </div>
             </div>
         </section>
 
@@ -199,7 +195,7 @@
 
     <script>
         const app = {
-            // *** IMPORTANT: REPLACE WITH YOUR DEPLOYED WEB APP URL ***
+            // *** IMPORTANT: PASTE YOUR DEPLOYED WEB APP URL HERE ***
             GAS_API_URL: 'https://script.google.com/macros/s/AKfycbx2qRAqozx8KYpb9JKx2HzvvBO4mBcbOsz9KoI5C2bPbARqUDK0ASCT7zMAOHFp8wRU/exec',
             
             state: { user: null, config: {}, courses: [] },
@@ -252,51 +248,26 @@
                 // Home
                 if(cfg.homepageTitle) document.getElementById('hero-title').innerText = cfg.homepageTitle;
                 if(cfg.homepageText) document.getElementById('hero-text').innerText = cfg.homepageText;
-                
-                // HOME UPDATE: Sub-heading render
                 if(cfg.homeSubHeading) document.getElementById('home-sub-heading-disp').innerText = cfg.homeSubHeading;
 
                 // About (Dynamic)
                 if(cfg.aboutVision) document.getElementById('vis-text-disp').innerText = cfg.aboutVision;
                 if(cfg.aboutHistory) document.getElementById('his-text-disp').innerText = cfg.aboutHistory;
                 
-                // Founders
+                // Founders (Leadership) with Description
                 const founders = cfg.foundersJson ? JSON.parse(cfg.foundersJson) : [];
                 document.getElementById('founders-list-disp').innerHTML = founders.map(f => `
-                    <div class="card" style="display:flex; gap:15px; align-items:center;">
-                        <div style="width:60px; height:60px; background:#e2e8f0; border-radius:50%; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round">person</span>
+                    <div class="card" style="display:flex; flex-direction:column; gap:15px; text-align:center; padding:30px;">
+                        <div style="width:80px; height:80px; background:#e2e8f0; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center;">
+                            <span class="material-icons-round" style="font-size:36px;">person</span>
                         </div>
                         <div>
-                            <h4 style="font-size:1.1rem;">${f.name}</h4>
-                            <p style="color:var(--primary); font-size:0.9rem;">${f.title}</p>
+                            <h4 style="font-size:1.2rem; margin-bottom:5px;">${f.name}</h4>
+                            <p style="color:var(--primary); font-size:0.9rem; font-weight:600; margin-bottom:15px;">${f.title}</p>
+                            <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.5;">${f.desc || ''}</p>
                         </div>
                     </div>
                 `).join('');
-
-                // Team
-                const team = cfg.teamJson ? JSON.parse(cfg.teamJson) : [];
-                document.getElementById('team-list-disp').innerHTML = team.map(t => `
-                    <div class="card" style="text-align:center;">
-                        <div style="width:60px; height:60px; background:#e2e8f0; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round">person</span>
-                        </div>
-                        <h4>${t.name}</h4>
-                        <p style="color:var(--primary); font-size:0.85rem;">${t.title}</p>
-                    </div>
-                `).join('');
-
-                // Courses
-                const courseHtml = this.state.courses.map(c => `
-                    <div class="card course-card">
-                         <div style="height:150px; background:#334155; border-radius:8px; margin-bottom:15px; overflow:hidden;">
-                            ${c.thumbnail ? `<img src="${c.thumbnail}" style="width:100%; height:100%; object-fit:cover;">` : ''}
-                         </div>
-                         <h3>${c.title}</h3>
-                         <p style="color:var(--text-muted); font-size:0.9rem;">${c.desc}</p>
-                    </div>
-                `).join('');
-                document.getElementById('course-list-public').innerHTML = courseHtml || '<p>No courses available.</p>';
             },
 
             router: {
@@ -339,7 +310,6 @@
                     const cfg = app.state.config;
                     
                     if(tab === 'home') {
-                        // CMS UPDATE: Replaced Corporate Title with Sub Heading
                         container.innerHTML = `
                             <h3>Home Page</h3>
                             <div class="input-group"><label>Hero Title</label><input type="text" id="cms-home-title" class="form-input" value="${cfg.homepageTitle || ''}"></div>
@@ -348,13 +318,15 @@
                         `;
                     } else if(tab === 'about') {
                         const founders = cfg.foundersJson ? JSON.parse(cfg.foundersJson) : [];
-                        const team = cfg.teamJson ? JSON.parse(cfg.teamJson) : [];
                         
-                        // Helper to generate inputs for array
-                        const renderPersonInputs = (arr, prefix) => arr.map((p,i) => `
-                            <div style="display:flex; gap:10px; margin-bottom:5px;">
-                                <input type="text" class="form-input cms-${prefix}-name" value="${p.name}" placeholder="Name">
-                                <input type="text" class="form-input cms-${prefix}-title" value="${p.title}" placeholder="Title">
+                        // Updated CMS to edit Descriptions
+                        const renderPersonInputs = (arr) => arr.map((p,i) => `
+                            <div class="card" style="margin-bottom:15px; padding:15px; border:1px solid var(--border);">
+                                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                    <input type="text" class="form-input cms-f-name" value="${p.name}" placeholder="Name">
+                                    <input type="text" class="form-input cms-f-title" value="${p.title}" placeholder="Title">
+                                </div>
+                                <textarea class="form-input cms-f-desc" rows="3" placeholder="Description about this leader...">${p.desc || ''}</textarea>
                             </div>
                         `).join('');
 
@@ -363,46 +335,42 @@
                             <div class="input-group"><label>Vision Text</label><textarea id="cms-vis-text" class="form-input">${cfg.aboutVision || ''}</textarea></div>
                             <div class="input-group"><label>History Text</label><textarea id="cms-his-text" class="form-input">${cfg.aboutHistory || ''}</textarea></div>
                             
-                            <h4>Founders (Top Leadership)</h4>
-                            <div id="cms-founders-list">${renderPersonInputs(founders, 'f')}</div>
-                            
-                            <h4>Core Team</h4>
-                            <div id="cms-team-list">${renderPersonInputs(team, 't')}</div>
+                            <h4 style="margin-top:20px;">Leadership Team</h4>
+                            <div id="cms-founders-list">${renderPersonInputs(founders)}</div>
                         `;
                     }
                 },
 
                 saveWebsiteChanges: function() {
                     const items = [];
-                    // Gather Home Data if present
+                    // Gather Home Data
                     if(document.getElementById('cms-home-title')) {
                         items.push({key: 'homepageTitle', value: document.getElementById('cms-home-title').value});
                         items.push({key: 'homepageText', value: document.getElementById('cms-home-text').value});
-                        // CMS UPDATE: Save Sub-heading
                         items.push({key: 'homeSubHeading', value: document.getElementById('cms-home-sub').value});
                     }
-                    // Gather About Data if present
+                    // Gather About Data
                     if(document.getElementById('cms-vis-text')) {
                         items.push({key: 'aboutVision', value: document.getElementById('cms-vis-text').value});
                         items.push({key: 'aboutHistory', value: document.getElementById('cms-his-text').value});
                         
-                        // Parse Founder Inputs
+                        // Parse Founder Inputs (With Description)
                         const fNames = document.querySelectorAll('.cms-f-name');
                         const fTitles = document.querySelectorAll('.cms-f-title');
-                        const fData = Array.from(fNames).map((el, i) => ({name: el.value, title: fTitles[i].value}));
+                        const fDescs = document.querySelectorAll('.cms-f-desc');
+                        
+                        const fData = Array.from(fNames).map((el, i) => ({
+                            name: el.value, 
+                            title: fTitles[i].value,
+                            desc: fDescs[i].value
+                        }));
                         items.push({key: 'foundersJson', value: JSON.stringify(fData)});
-
-                        // Parse Team Inputs
-                        const tNames = document.querySelectorAll('.cms-t-name');
-                        const tTitles = document.querySelectorAll('.cms-t-title');
-                        const tData = Array.from(tNames).map((el, i) => ({name: el.value, title: tTitles[i].value}));
-                        items.push({key: 'teamJson', value: JSON.stringify(tData)});
                     }
 
                     app.callApi('saveWebsiteContent', { items: items }, 'POST').then(res => {
                         if(res && res.status === 'success') {
                             alert('Website Updated!');
-                            location.reload(); // Reload to fetch new public data
+                            location.reload(); 
                         }
                     });
                 },
@@ -430,7 +398,6 @@
                 },
 
                 addModuleUI: function() {
-                    const id = Date.now();
                     const html = `
                     <div class="card module-item" style="padding:15px; margin-bottom:10px;">
                         <input type="text" class="form-input mod-title" placeholder="Module Title">

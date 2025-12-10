@@ -1,230 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Winner Academy WAE 2012</title>
 
-    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap"
-        rel="stylesheet">
-
-    <!-- ICONS -->
-    <!-- ICONS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
-    <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <style>
-        /* ------------------------------------------------------------------
-       1. DESIGN SYSTEM & VARS
-       ------------------------------------------------------------------ */
         :root {
-            /* Colors */
-            --primary: #D97706;
-            /* Amber 600 */
-            --primary-hover: #B45309;
-            --secondary: #EC4899;
-            /* Pink 500 */
-            /* Pink 500 */
-            --dark-bg: #FFFFFF;
-            /* White */
-            --card-bg: #F8FAFC;
-            /* Slate 50 */
-            --text-main: #0F172A;
-            /* Slate 900 */
-            --text-muted: #64748B;
-            /* Slate 500 */
-            --border: #E2E8F0;
-            /* Slate 200 */
-
-            /* Glassmorphism */
-            --glass-bg: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(0, 0, 0, 0.05);
-            --backdrop-blur: 12px;
-
-            /* Spacing */
+            --primary: #D97706; --primary-hover: #B45309; --secondary: #EC4899;
+            --dark-bg: #FFFFFF; --card-bg: #F8FAFC; --text-main: #0F172A; --text-muted: #64748B;
+            --border: #E2E8F0; --glass-bg: rgba(255, 255, 255, 0.9);
             --radius: 12px;
-            --radius-sm: 8px;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-main);
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* ------------------------------------------------------------------
-       2. UTILITIES
-       ------------------------------------------------------------------ */
-        .hidden {
-            display: none !important;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: rgba(0, 0, 0, 0.05);
-            color: var(--text-main);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        /* ------------------------------------------------------------------
-       3. COMPONENTS
-       ------------------------------------------------------------------ */
-        /* Header */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--backdrop-blur));
-            border-bottom: 1px solid var(--glass-border);
-            padding: 15px 0;
-        }
-
-        .nav-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: white;
-            letter-spacing: -0.5px;
-        }
-
-        .logo span {
-            color: var(--primary);
-        }
-
-        /* Forms */
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 10px;
-            background: rgba(128, 128, 128, 0.1);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            border-radius: var(--radius-sm);
-        }
-
-        /* Cards */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        /* ------------------------------------------------------------------
-       4. SECTIONS
-       ------------------------------------------------------------------ */
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-        }
-
-        .hero h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Course Grid */
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .course-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: var(--radius-sm);
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--dark-bg); color: var(--text-main); overflow-x: hidden; min-height: 100vh; }
+        .hidden { display: none !important; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .btn { padding: 10px 20px; border-radius: var(--radius); border: none; cursor: pointer; font-weight: 600; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn-secondary { background: #e2e8f0; color: var(--text-main); }
+        .btn-secondary:hover { background: #cbd5e1; }
+        
+        /* Layouts */
+        header { position: sticky; top: 0; z-index: 100; background: var(--glass-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 15px 0; }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; display:flex; align-items:center; gap:10px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .hero { text-align: center; padding: 80px 20px; }
+        .hero h1 { font-family: 'Outfit', sans-serif; font-size: 3.5rem; margin-bottom: 20px; color: var(--text-main); }
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 40px; }
+        .form-input { width: 100%; padding: 10px; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; }
+        .input-group label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
     </style>
 </head>
-
 <body>
 
-    <!-- APP STATE MOCK OVERLAY (For Local Dev) -->
-    <div id="mock-controls"
-        style="position: fixed; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 8px; border: 1px solid white; z-index: 9999;">
-        <p style="font-size: 10px; color: #aaa; margin-bottom: 5px;">DEV MOCK CONTROLS</p>
-        <button onclick="mockLogin('admin')"
-            style="font-size:12px; padding: 5px 10px; cursor: pointer; margin-right: 5px;">Mock Admin</button>
-        <button onclick="mockLogin('student')" style="font-size:12px; padding: 5px 10px; cursor: pointer;">Mock
-            Student</button>
-    </div>
-
-    <!-- NAVIGATION -->
     <header>
         <div class="container nav-flex">
-            <div class="logo" style="display:flex; align-items:center; gap:10px;">
-                <!-- Logo Placeholder -->
-                <div id="header-logo-icon"
-                    style="width:40px; height:40px; background:var(--primary); border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">
-                    W</div>
-                <span style="color:var(--text-main);">WAE <span style="color:var(--primary);">2012</span></span>
+            <div class="logo">
+                <div id="header-logo-icon" style="width:40px; height:40px; background:var(--primary); border-radius:8px; display:flex; align-items:center; justify-content:center; color:white;">W</div>
+                <span>WAE <span style="color:var(--primary);">2012</span></span>
             </div>
             <nav>
                 <button id="nav-btn-home" class="btn btn-secondary">Home</button>
@@ -236,889 +57,443 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT AREA -->
     <main id="app-main">
-
-        <!-- 1. PUBLIC HOME -->
         <section id="view-home" class="container">
             <div class="hero">
-                <div>
-                    <h1 id="hero-title">Winner Academy of Excellence</h1>
-                </div>
-
-                <div>
-                    <p id="hero-text"
-                        style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">
-                        Premium Training Service Provider. <br>
-                        <span style="color:var(--primary); font-weight:600;">People Independent, Process
-                            Dependent.</span>
-                    </p>
-                </div>
+                <h1 id="hero-title">Winner Academy of Excellence</h1>
+                <p id="hero-text" style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Premium Training Service Provider.</p>
                 <button class="btn btn-primary" onclick="app.router.go('login')">Get Started</button>
             </div>
-
-            <div id="corporate-training" style="margin: 80px 0;">
-                <h2 style="font-family:'Outfit'; font-size: 2.5rem; text-align:center; margin-bottom: 40px;">Corporate
-                    Training</h2>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:40px; align-items:center;">
-                    <div>
-                        <div>
-                            <h3 id="corp-title" style="font-size:1.5rem; margin-bottom:15px; color:var(--primary);">
-                                Empower Your
-                                Workforce
-                            </h3>
-                        </div>
-                        <p style="color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
-                            Winner Academy WAE 2012 provides world-class corporate training solutions designed to
-                            elevate employee performance.
-                            From leadership workshops to technical skill acquisition, we cover it all.
-                        </p>
-                        <ul style="color:var(--text-muted); padding-left:20px; line-height:1.8;">
-                            <li>Customized learning paths</li>
-                            <li>On-site and remote options</li>
-                            <li>Performance tracking and analytics</li>
-                        </ul>
-                    </div>
-                    <div
-                        style="background:var(--card-bg); height:300px; border-radius:var(--radius); display:flex; align-items:center; justify-content:center; border:1px solid var(--border);">
-                        <span class="material-icons-round"
-                            style="font-size:60px; color:var(--text-muted);">business_center</span>
-                    </div>
-                </div>
-            </div>
-
-            <div id="contact-section"
-                style="margin: 80px 0; text-align:center; padding: 60px 20px; background:linear-gradient(180deg, transparent, rgba(79, 70, 229, 0.1)); border-radius:var(--radius);">
-                <h2 style="font-family:'Outfit'; font-size: 2.5rem; margin-bottom: 20px;">Get in Touch</h2>
-                <p style="color:var(--text-muted); margin-bottom:30px;">Have questions? Reach out to us for course
-                    inquiries or partnership opportunities.</p>
-                <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
-                    <div class="card" style="min-width:250px;">
-                        <span class="material-icons-round" style="color:var(--primary); font-size:30px;">email</span>
-                        <p style="margin-top:10px;">info@waecs.in</p>
-                    </div>
-                    <div class="card" style="min-width:250px;">
-                        <span class="material-icons-round" style="color:var(--primary); font-size:30px;">phone</span>
-                        <p style="margin-top:10px;">+91-8290450219</p>
-                    </div>
+            
+            <div id="corporate-training" style="margin: 60px 0;">
+                <h2 style="font-family:'Outfit'; font-size: 2.5rem; text-align:center; margin-bottom: 30px;">Corporate Training</h2>
+                <div class="card" style="text-align:center;">
+                   <h3 id="corp-title" style="color:var(--primary); margin-bottom:15px;">Empower Your Workforce</h3>
+                   <p style="color:var(--text-muted);">World-class corporate training solutions designed to elevate employee performance.</p>
                 </div>
             </div>
 
             <div id="public-courses">
-                <h2 style="font-family:'Outfit'; margin-top:40px; text-align:center;">Explore Our Courses</h2>
-                <p style="text-align:center; color:var(--text-muted); margin-bottom:30px;">Login to access full content.
-                </p>
+                <h2 style="font-family:'Outfit'; text-align:center;">Explore Our Courses</h2>
                 <div class="course-grid" id="course-list-public">
-                    <!-- Rendered via JS -->
-                    <div class="card course-card">
-                        <div
-                            style="height:180px; background:#334155; display:flex; align-items:center; justify-content:center; border-radius:8px; margin-bottom:15px;">
-                            Course Preview</div>
-                        <h3>Loading...</h3>
-                    </div>
+                     <div class="card"><h3>Loading Courses...</h3></div>
                 </div>
             </div>
         </section>
 
-        <!-- 1.1 PUBLIC ABOUT (New View) -->
         <section id="view-about" class="container hidden" style="padding-top:40px;">
             <div style="text-align:center; max-width:800px; margin:0 auto;">
                 <h1 style="font-family:'Outfit'; font-size:3rem; margin-bottom:20px;">About WAE</h1>
-                <p style="color:var(--text-muted); font-size:1.1rem; line-height:1.6;">
-                    Founded in 2012, Winner Academy has been at the forefront of educational excellence.
-                    Our mission is to bridge the gap between academic knowledge and industry requirements.
-                </p>
+                <p style="color:var(--text-muted); font-size:1.1rem; line-height:1.6;">Founded in 2012, Winner Academy bridges the gap between academic knowledge and industry requirements.</p>
             </div>
 
             <div style="margin-top:60px; display:grid; grid-template-columns:1fr 1fr; gap:40px;">
                 <div class="card">
-                    <h3 style="color:var(--primary); margin-bottom:15px;">Our Vision</h3>
-                    <p style="color:var(--text-muted); line-height:1.6;">
-                        To be the global leader in skill-based education, creating a workforce that is ready for the
-                        challenges of tomorrow.
-                    </p>
+                    <h3 style="color:var(--primary); margin-bottom:15px;" id="vis-title-disp">Our Vision</h3>
+                    <p style="color:var(--text-muted);" id="vis-text-disp">Loading...</p>
                 </div>
                 <div class="card">
-                    <h3 style="color:var(--secondary); margin-bottom:15px;">Our History</h3>
-                    <p style="color:var(--text-muted); line-height:1.6;">
-                        Started as a small coaching center, WAE has grown into a comprehensive LMS platform serving
-                        thousands of students worldwide.
-                    </p>
+                    <h3 style="color:var(--secondary); margin-bottom:15px;" id="his-title-disp">Our History</h3>
+                    <p style="color:var(--text-muted);" id="his-text-disp">Loading...</p>
                 </div>
             </div>
 
             <div style="margin-top:60px;">
-                <h2 style="font-family:'Outfit'; text-align:center; margin-bottom:40px;">Meet the Leaders</h2>
-                <div
-                    style="display:grid; grid-template-columns:repeat(auto-fit, minmax(350px, 1fr)); gap:30px; justify-content:center;">
-                    <!-- Founder 1 -->
-                    <div class="card" style="display:flex; gap:20px; align-items:center;">
-                        <div
-                            style="width:100px; height:100px; background:#334155; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round"
-                                style="font-size:40px; color:var(--text-muted);">person</span>
-                        </div>
-                        <div>
-                            <h3 style="font-size:1.2rem;" id="founder-1-name">Tanushree Ghosh</h3>
-                            <p style="color:var(--primary); margin-bottom:5px; font-size:0.9rem;" id="founder-1-title">
-                                Founder & CEO</p>
-                            <p style="color:var(--text-muted); font-size:0.85rem;">
-                                Driving the vision of WAE to create a difference in the education sector.
-                            </p>
-                        </div>
+                <h2 style="font-family:'Outfit'; text-align:center; margin-bottom:40px;">Leadership</h2>
+                <div id="founders-list-disp" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px;">
                     </div>
 
-                    <!-- Founder 2 -->
-                    <div class="card" style="display:flex; gap:20px; align-items:center;">
-                        <div
-                            style="width:100px; height:100px; background:#334155; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round"
-                                style="font-size:40px; color:var(--text-muted);">person</span>
-                        </div>
-                        <div>
-                            <h3 style="font-size:1.2rem;" id="founder-2-name">Nilesh Kumar Singh</h3>
-                            <p style="color:var(--primary); margin-bottom:5px; font-size:0.9rem;" id="founder-2-title">
-                                Co-Founder & COO</p>
-                            <p style="color:var(--text-muted); font-size:0.85rem;">
-                                Ensures operational excellence and process-dependent growth.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Founder 3 -->
-                    <div class="card" style="display:flex; gap:20px; align-items:center;">
-                        <div
-                            style="width:100px; height:100px; background:#334155; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round"
-                                style="font-size:40px; color:var(--text-muted);">person</span>
-                        </div>
-                        <div>
-                            <h3 style="font-size:1.2rem;" id="founder-3-name">Dr. Swati Gupta</h3>
-                            <p style="color:var(--primary); margin-bottom:5px; font-size:0.9rem;" id="founder-3-title">
-                                Head - HR</p>
-                            <p style="color:var(--text-muted); font-size:0.85rem;">
-                                Expert in HR & Training solutions
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- NEW CORE TEAM SECTION -->
                 <h2 style="font-family:'Outfit'; text-align:center; margin-top:60px; margin-bottom:40px;">Core Team</h2>
-                <div
-                    style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:30px; justify-content:center;">
-
-                    <!-- Team 1 -->
-                    <div class="card" style="text-align:center;">
-                        <div
-                            style="width:80px; height:80px; background:#334155; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round"
-                                style="font-size:30px; color:var(--text-muted);">person</span>
-                        </div>
-                        <h3 style="font-size:1.1rem;" id="team-1-name">Mukesh Sir</h3>
-                        <p style="color:var(--primary); font-size:0.85rem;" id="team-1-title">Senior Instructor</p>
-                    </div>
-
-                    <!-- Team 2 -->
-                    <div class="card" style="text-align:center;">
-                        <div
-                            style="width:80px; height:80px; background:#334155; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round"
-                                style="font-size:30px; color:var(--text-muted);">person</span>
-                        </div>
-                        <h3 style="font-size:1.1rem;" id="team-2-name">Devishwari</h3>
-                        <p style="color:var(--primary); font-size:0.85rem;" id="team-2-title">Operations Manager</p>
-                    </div>
-
-                    <!-- Team 3 -->
-                    <div class="card" style="text-align:center;">
-                        <div
-                            style="width:80px; height:80px; background:#334155; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round"
-                                style="font-size:30px; color:var(--text-muted);">person</span>
-                        </div>
-                        <h3 style="font-size:1.1rem;" id="team-3-name">Anjali</h3>
-                        <p style="color:var(--primary); font-size:0.85rem;" id="team-3-title">Student Counselor</p>
-                    </div>
-
-                </div>
+                <div id="team-list-disp" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:30px;">
+                     </div>
             </div>
         </section>
 
-        <!-- 2. LOGIN -->
         <section id="view-login" class="container hidden" style="max-width: 400px; margin-top: 50px;">
             <div class="card" style="text-align: center;">
                 <h2 style="margin-bottom: 20px;">Welcome Back</h2>
-                <p style="color: var(--text-muted); margin-bottom: 20px;">Sign in with Google to access your courses.
-                </p>
-                <button class="btn btn-primary" style="width: 100%;" onclick="startLogin()">
-                    <span class="material-icons-round"
-                        style="vertical-align: middle; font-size: 18px; margin-right: 8px;">login</span>
-                    Continue with Google
-                </button>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Sign in with Google to access your courses.</p>
+                <div id="g_id_onload" 
+                     data-client_id="422382896776-uh8e06n96ijen18p8ln527o9cg08sjr8.apps.googleusercontent.com" 
+                     data-callback="handleCredentialResponse" 
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left"></div>
             </div>
         </section>
 
-        <!-- 3. STUDENT DASHBOARD -->
         <section id="view-student-dash" class="container hidden" style="margin-top: 30px;">
-            <h1>My Dashboard</h1>
-            <div class="course-grid">
-                <div class="card">
-                    <h3>Overall Progress</h3>
-                    <div style="margin-top:10px; height:6px; background:#334155; border-radius:3px;">
-                        <div style="width: 45%; height:100%; background:var(--secondary); border-radius:3px;"></div>
-                    </div>
-                    <p style="margin-top:5px; font-size:0.9rem; color:var(--text-muted);">45% Completed Across All
-                        Courses</p>
-                </div>
-            </div>
-            <h2 style="margin-top: 40px;">My Enrolled Courses</h2>
+            <h1>My Learning</h1>
             <div class="course-grid" id="student-course-list">
-                <!-- Javascript will populate this -->
+                 <div class="card">No courses enrolled yet.</div>
             </div>
         </section>
 
-
-        <section id="view-course-player" class="hidden" style="display:flex; height: calc(100vh - 73px);">
-            <!-- Sidebar -->
-            <aside
-                style="width: 300px; background: var(--card-bg); border-right: 1px solid var(--border); overflow-y: auto; flex-shrink:0;">
-                <div style="padding: 20px; border-bottom: 1px solid var(--border);">
-                    <button class="btn btn-secondary" style="font-size:0.8rem; margin-bottom:10px;"
-                        onclick="app.router.go('student-dash')">← Back to Dashboard</button>
-                    <h3 id="player-course-title">Course Title</h3>
-                </div>
-                <div id="player-module-list">
-                    <!-- Modules & Lessons List -->
-                    <div style="padding: 15px; border-bottom:1px solid var(--border);">
-                        <h4
-                            style="font-size:0.9rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:10px;">
-                            Module 1: Introduction</h4>
-                        <div class="lesson-item"
-                            style="padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; cursor:pointer; display:flex; justify-content:space-between;">
-                            <span>1.1 Welcome</span>
-                            <span class="material-icons-round"
-                                style="font-size:16px; color:#10B981;">check_circle</span>
-                        </div>
-                        <div class="lesson-item" style="padding:8px; margin-top:5px; cursor:pointer;">
-                            <span>1.2 Course Overview</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Main Content -->
-            <div style="flex-grow:1; display:flex; flex-direction:column;">
-                <div style="flex-grow:1; background:#000; display:flex; align-items:center; justify-content:center;">
-                    <!-- Video Placeholder -->
-                    <div style="text-align:center;">
-                        <span class="material-icons-round"
-                            style="font-size:80px; color:rgba(255,255,255,0.3);">play_circle_outline</span>
-                        <p style="margin-top:20px; color:var(--text-muted);">Video Player Area</p>
-                    </div>
-                </div>
-                <div
-                    style="height: 80px; background: var(--card-bg); border-top: 1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 30px;">
-                    <div>
-                        <h3 id="player-lesson-title">1.1 Welcome</h3>
-                    </div>
-                    <button class="btn btn-primary">Mark Complete & Next</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. ADMIN DASHBOARD -->
         <section id="view-admin-dash" class="container hidden" style="margin-top: 30px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
                 <h1>Admin Control Panel</h1>
                 <button class="btn btn-primary" onclick="app.admin.openEditWebsite()">Edit Website Content</button>
             </div>
 
-            <!-- ADMIN EDIT MODAL -->
-            <!-- FULL-SCREEN ADMIN CMS MODAL -->
-            <div id="admin-cms-modal" class="hidden"
-                style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:flex; align-items:center; justify-content:center;">
-                <div class="card" style="width:90%; height:90%; display:flex; flex-direction:column;">
-                    <div
-                        style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:20px;">
-                        <h2>Website Content Management</h2>
-                        <button class="btn btn-secondary"
-                            onclick="document.getElementById('admin-cms-modal').classList.add('hidden')">X</button>
-                    </div>
-
-                    <div style="flex-grow:1; display:flex; overflow:hidden;">
-                        <!-- CMS Sidebar -->
-                        <div style="width:250px; border-right:1px solid var(--border); padding-right:20px;">
-                            <button class="btn btn-secondary" onclick="app.admin.switchCMSTab('home')" id="tab-btn-home"
-                                style="width:100%; text-align:left; margin-bottom:10px; background:var(--primary);">Home
-                                Page</button>
-                            <button class="btn btn-secondary" onclick="app.admin.switchCMSTab('about')"
-                                id="tab-btn-about" style="width:100%; text-align:left; margin-bottom:10px;">About
-                                Page</button>
-                        </div>
-
-                        <!-- CMS Form Area -->
-                        <div style="flex-grow:1; padding-left:30px; overflow-y:auto;" id="cms-content-area">
-                            <!-- Injected JS based on Tab -->
-                            <h3 style="margin-bottom:20px; color:var(--text-muted);">Home Page Header</h3>
-                            <div class="input-group">
-                                <label>Hero Title</label>
-                                <input type="text" id="cms-home-title" class="form-input"
-                                    value="Winner Academy of Excellence">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        style="border-top:1px solid var(--border); padding-top:15px; margin-top:20px; text-align:right;">
-                        <button class="btn btn-primary" onclick="app.admin.saveWebsiteChanges()">Save All Changes
-                            Live</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- COURSE CREATOR WIZARD -->
-            <div id="course-creator-modal" class="hidden"
-                style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:flex; align-items:center; justify-content:center;">
-                <div class="card" style="width:800px; max-height:90vh; display:flex; flex-direction:column;">
-                    <div
-                        style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:20px;">
-                        <h2>Create New Course</h2>
-                        <button class="btn btn-secondary"
-                            onclick="document.getElementById('course-creator-modal').classList.add('hidden')">X</button>
-                    </div>
-
-                    <div style="overflow-y:auto; padding-right:10px;">
-                        <!-- Step 1: Basic Info -->
-                        <div class="input-group">
-                            <label>Course Title</label>
-                            <input type="text" id="new-course-title" class="form-input"
-                                placeholder="e.g. Master Python">
-                        </div>
-                        <div class="input-group">
-                            <label>Description</label>
-                            <textarea id="new-course-desc" class="form-input" rows="2"
-                                placeholder="Short summary"></textarea>
-                        </div>
-                        <div class="input-group">
-                            <label>Thumbnail</label>
-                            <div style="border:1px dashed var(--border); padding:20px; text-align:center; border-radius:8px; cursor:pointer;"
-                                onclick="app.admin.triggerMockUpload(null)">
-                                <span class="material-icons-round">add_photo_alternate</span>
-                                <p style="font-size:0.8rem; color:var(--text-muted);">Click to Upload Thumbnail</p>
-                            </div>
-                        </div>
-
-                        <!-- Step 2: Curriculum -->
-                        <h3 style="margin-top:30px; margin-bottom:15px;">Curriculum Builder</h3>
-                        <div id="new-course-modules">
-                            <!-- Modules will be added here -->
-                        </div>
-                        <button class="btn btn-secondary" style="width:100%; border:1px dashed var(--border);"
-                            onclick="app.admin.addModuleUI()">+ Add Module</button>
-                    </div>
-
-                    <div style="margin-top:20px; text-align:right;">
-                        <button class="btn btn-primary" onclick="app.admin.saveNewCourse()">Create Course</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="course-grid">
-                <div class="card">
-                    <h3>Total Students</h3>
-                    <p style="font-size: 2rem; font-weight: 800; color: var(--primary);">142</p>
-                </div>
-                <div class="card">
-                    <h3>Total Sales</h3>
-                    <p style="font-size: 2rem; font-weight: 800; color: var(--secondary);">$0</p>
-                </div>
-            </div>
-
             <div style="margin-top: 40px;">
-                <h2>Course Management</h2>
-                <button class="btn btn-secondary" style="margin-top:10px;" onclick="app.admin.openCourseCreator()">+
-                    Create
-                    New Course</button>
-
-                <!-- Mock List -->
-                <div style="margin-top: 20px;">
-                    <div class="card"
-                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <span>Demo Course 1</span>
-                        <button class="btn btn-secondary" style="font-size:0.8rem;"
-                            onclick="app.admin.openCourseCreator('Demo Course 1')">Edit</button>
-                    </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2>Course Management</h2>
+                    <button class="btn btn-secondary" onclick="app.admin.openCourseCreator()">+ Create New Course</button>
                 </div>
+                <div id="admin-course-list" style="margin-top: 20px;">
+                    </div>
             </div>
         </section>
-
     </main>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <div id="admin-cms-modal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:flex; align-items:center; justify-content:center;">
+        <div class="card" style="width:90%; height:90%; display:flex; flex-direction:column; background:white;">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:20px;">
+                <h2>Edit Website Content</h2>
+                <button class="btn btn-secondary" onclick="document.getElementById('admin-cms-modal').classList.add('hidden')">Close</button>
+            </div>
+            <div style="flex-grow:1; overflow-y:auto; display:grid; grid-template-columns: 250px 1fr; gap:20px;">
+                <div style="border-right:1px solid var(--border); padding-right:20px;">
+                    <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('home')">Home Page</button>
+                    <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('about')">About Page</button>
+                </div>
+                <div id="cms-form-area">
+                    </div>
+            </div>
+            <div style="padding-top:15px; border-top:1px solid var(--border); text-align:right;">
+                <button class="btn btn-primary" onclick="app.admin.saveWebsiteChanges()">Save Changes Live</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="course-creator-modal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:flex; align-items:center; justify-content:center;">
+        <div class="card" style="width:800px; max-height:90vh; display:flex; flex-direction:column; background:white;">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:20px;">
+                <h2 id="course-modal-title">Create/Edit Course</h2>
+                <button class="btn btn-secondary" onclick="document.getElementById('course-creator-modal').classList.add('hidden')">Close</button>
+            </div>
+            <div style="overflow-y:auto; padding-right:10px; flex-grow:1;">
+                <input type="hidden" id="edit-course-id">
+                <div class="input-group"><label>Course Title</label><input type="text" id="new-course-title" class="form-input"></div>
+                <div class="input-group"><label>Description</label><textarea id="new-course-desc" class="form-input" rows="2"></textarea></div>
+                <div class="input-group"><label>Thumbnail URL</label><input type="text" id="new-course-thumb" class="form-input" placeholder="https://..."></div>
+                
+                <h3 style="margin:20px 0 10px;">Curriculum</h3>
+                <div id="new-course-modules"></div>
+                <button class="btn btn-secondary" style="width:100%; border:1px dashed var(--border);" onclick="app.admin.addModuleUI()">+ Add Module</button>
+            </div>
+            <div style="padding-top:15px; border-top:1px solid var(--border); text-align:right;">
+                <button class="btn btn-primary" onclick="app.admin.saveNewCourse()">Save Course to Database</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // --- APP CORE ---
         const app = {
-            // REPLACE THIS WITH YOUR DEPLOYED GAS WEB APP URL
+            // *** IMPORTANT: REPLACE WITH YOUR DEPLOYED WEB APP URL ***
             GAS_API_URL: 'https://script.google.com/macros/s/AKfycbx2qRAqozx8KYpb9JKx2HzvvBO4mBcbOsz9KoI5C2bPbARqUDK0ASCT7zMAOHFp8wRU/exec',
-
-            state: {
-                user: null, // { email, role: 'student' | 'admin' }
-                courses: [],
-                config: {}
-            },
-
-            // MOCK MODE FLAG
-            MOCK_MODE: false, // Set to false for Live API
+            
+            state: { user: null, config: {}, courses: [] },
 
             init: function () {
-                console.log('App Initializing...');
                 this.router.init();
                 this.loadPublicData();
-                this.auth.checkSession();
-
-                // Setup Bindings
+                
+                // Bindings
                 document.getElementById('nav-btn-home').onclick = () => this.router.go('home');
                 document.getElementById('nav-btn-about').onclick = () => this.router.go('about');
                 document.getElementById('nav-btn-login').onclick = () => this.router.go('login');
                 document.getElementById('nav-btn-dashboard').onclick = () => {
-                    if (this.state.user?.role === 'admin') this.router.go('admin-dash');
-                    else this.router.go('student-dash');
+                    this.state.user?.role === 'admin' ? this.router.go('admin-dash') : this.router.go('student-dash');
                 };
-                document.getElementById('nav-btn-logout').onclick = () => this.auth.logout();
+                document.getElementById('nav-btn-logout').onclick = () => {
+                    this.state.user = null;
+                    this.updateUIForAuth();
+                    this.router.go('home');
+                };
             },
 
-            // --- API HELPER ---
             callApi: async function (action, payload = null, method = 'GET') {
-                if (this.MOCK_MODE) return null; // Logic handled in caller
-
                 let url = `${this.GAS_API_URL}?action=${action}`;
                 let options = { method: method };
-
                 if (method === 'POST' && payload) {
-                    // GAS doPost usually handles standard raw content better
                     options.body = JSON.stringify({ ...payload, action: action });
-                    // Note: GAS CORS request often requires 'text/plain' to avoid preflight issues in simple triggers
-                    // But for Web App 'application/json' usually works if deployed correctly. 
-                    // We use no-cors if needed but we need response. 
-                    // Standard fetch to GAS Web App endpoint works with Redirects followed.
                 }
-
                 try {
-                    const response = await fetch(url, options);
-                    const json = await response.json();
-                    return json;
+                    const res = await fetch(url, options);
+                    return await res.json();
                 } catch (e) {
-                    console.error('API Error:', e);
                     alert('Connection Error: ' + e.message);
-                    throw e;
+                    console.error(e);
+                    return null;
                 }
             },
 
             loadPublicData: function () {
-                if (this.MOCK_MODE) {
-                    // Mock Data
-                    this.renderPublicCourses([
-                        { title: 'Corporate Leadership', desc: 'Master the art of leading.', thumbnail: '' },
-                        { title: 'Excel Mastery', desc: 'Advanced spreadsheets.', thumbnail: '' }
-                    ]);
-                    return;
-                }
-
-                // GAS Fetch Call
                 this.callApi('getPublicContent').then(data => {
                     if (!data) return;
-                    this.state.config = data.config;
-                    this.renderPublicCourses(data.courses);
-                    if (data.config.homepageTitle) document.getElementById('hero-title').innerText = data.config.homepageTitle;
+                    this.state.config = data.config || {};
+                    this.state.courses = data.courses || [];
+                    this.renderPublicContent();
                 });
             },
 
-            renderPublicCourses: function (list) {
-                const container = document.getElementById('course-list-public');
-                container.innerHTML = list.map(c => `
-          <div class="card course-card">
-            <div style="height:180px; background:#334155; display:flex; align-items:center; justify-content:center; border-radius:8px; margin-bottom:15px;">
-              <span class="material-icons-round" style="font-size:40px; color:var(--text-muted);">school</span>
-            </div>
-            <h3>${c.title}</h3>
-            <p style="color:var(--text-muted); font-size:0.9rem; margin-top:5px;">${c.desc}</p>
-          </div>
-        `).join('');
+            renderPublicContent: function() {
+                const cfg = this.state.config;
+                // Home
+                if(cfg.homepageTitle) document.getElementById('hero-title').innerText = cfg.homepageTitle;
+                if(cfg.homepageText) document.getElementById('hero-text').innerText = cfg.homepageText;
+                if(cfg.corpTitle) document.getElementById('corp-title').innerText = cfg.corpTitle;
+
+                // About (Dynamic)
+                if(cfg.aboutVision) document.getElementById('vis-text-disp').innerText = cfg.aboutVision;
+                if(cfg.aboutHistory) document.getElementById('his-text-disp').innerText = cfg.aboutHistory;
+                
+                // Founders
+                const founders = cfg.foundersJson ? JSON.parse(cfg.foundersJson) : [];
+                document.getElementById('founders-list-disp').innerHTML = founders.map(f => `
+                    <div class="card" style="display:flex; gap:15px; align-items:center;">
+                        <div style="width:60px; height:60px; background:#e2e8f0; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                            <span class="material-icons-round">person</span>
+                        </div>
+                        <div>
+                            <h4 style="font-size:1.1rem;">${f.name}</h4>
+                            <p style="color:var(--primary); font-size:0.9rem;">${f.title}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Team
+                const team = cfg.teamJson ? JSON.parse(cfg.teamJson) : [];
+                document.getElementById('team-list-disp').innerHTML = team.map(t => `
+                    <div class="card" style="text-align:center;">
+                        <div style="width:60px; height:60px; background:#e2e8f0; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center;">
+                            <span class="material-icons-round">person</span>
+                        </div>
+                        <h4>${t.name}</h4>
+                        <p style="color:var(--primary); font-size:0.85rem;">${t.title}</p>
+                    </div>
+                `).join('');
+
+                // Courses
+                const courseHtml = this.state.courses.map(c => `
+                    <div class="card course-card">
+                         <div style="height:150px; background:#334155; border-radius:8px; margin-bottom:15px; overflow:hidden;">
+                            ${c.thumbnail ? `<img src="${c.thumbnail}" style="width:100%; height:100%; object-fit:cover;">` : ''}
+                         </div>
+                         <h3>${c.title}</h3>
+                         <p style="color:var(--text-muted); font-size:0.9rem;">${c.desc}</p>
+                    </div>
+                `).join('');
+                document.getElementById('course-list-public').innerHTML = courseHtml || '<p>No courses available.</p>';
             },
 
             router: {
-                init: function () {
-                    this.go('home');
-                },
-                go: function (viewId) {
-                    // Hide all
+                init: function() { this.go('home'); },
+                go: function(viewId) {
                     document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
-                    // Show Target
                     const target = document.getElementById(`view-${viewId}`);
-                    if (target) target.classList.remove('hidden');
-                    else console.error(`View ${viewId} not found`);
-
-                    window.scrollTo(0, 0);
+                    if(target) target.classList.remove('hidden');
+                    window.scrollTo(0,0);
                 }
             },
 
-            auth: {
-                checkSession: function () {
-                    // Check local storage or cookie? 
-                    // For GAS, usually session is checked on server, but we can't persist easy in iframe without cookie.
-                    // We will rely on UI state for this single page session.
-                },
-
-                login: function (role = 'student') {
-                    // Simulate simple login
-                    app.state.user = { email: 'demo@wae.com', role: role, name: 'Demo User' };
-                    app.updateUIForAuth();
-
-                    if (role === 'admin') app.router.go('admin-dash');
-                    else app.router.go('student-dash');
-                },
-
-                logout: function () {
-                    app.state.user = null;
-                    app.updateUIForAuth();
-                    app.router.go('home');
-                }
-            },
-
-            updateUIForAuth: function () {
-                const user = this.state.user;
-                const loggedIn = !!user;
-
-                // Toggle Nav Items
-                document.getElementById('nav-btn-login').classList.toggle('hidden', loggedIn);
-                document.getElementById('nav-btn-dashboard').classList.toggle('hidden', !loggedIn);
-                document.getElementById('nav-btn-logout').classList.toggle('hidden', !loggedIn);
-
-                if (loggedIn) {
-                    document.getElementById('nav-btn-dashboard').innerText = user.role === 'admin' ? 'Admin Panel' : 'My Learning';
-                    if (user.role === 'student') this.loadStudentCourses();
-                } else {
-                    // Ensure admin specific UI is cleaned up on logout if necessary
-                }
-            },
-
-            loadStudentCourses: function () {
-                try {
-                    console.log('Loading student courses...');
-                    const list = [
-                        { id: 1, title: 'Corporate Leadership', progress: 10 },
-                        { id: 2, title: 'Excel Mastery', progress: 80 }
-                    ];
-
-                    const container = document.getElementById('student-course-list');
-                    if (!container) {
-                        console.error('Student course list container not found!');
-                        return;
-                    }
-                    container.innerHTML = list.map(c => `
-              <div class="card course-card">
-                <div style="height:140px; background:#334155; display:flex; align-items:center; justify-content:center; border-radius:8px; margin-bottom:15px;">
-                     <span class="material-icons-round" style="font-size:40px; color:var(--text-muted);">play_circle</span>
-                </div>
-                <h3>${c.title}</h3>
-                <div style="margin-top:10px; height:4px; background:#334155; border-radius:2px;">
-                    <div style="width: ${c.progress}%; height:100%; background:var(--primary); border-radius:2px;"></div>
-                </div>
-                <p style="margin-top:5px; font-size:0.8rem; color:var(--text-muted);">${c.progress}% Complete</p>
-                <button class="btn btn-secondary" style="width:100%; margin-top:15px;" onclick="app.router.go('course-player')">Continue Learning</button>
-              </div>
-            `).join('');
-                } catch (e) {
-                    console.error('Error loading student courses:', e);
-                }
+            updateUIForAuth: function() {
+                const u = this.state.user;
+                document.getElementById('nav-btn-login').classList.toggle('hidden', !!u);
+                document.getElementById('nav-btn-dashboard').classList.toggle('hidden', !u);
+                document.getElementById('nav-btn-logout').classList.toggle('hidden', !u);
+                
+                if (u && u.role === 'admin') this.admin.loadDashboard();
             },
 
             admin: {
-                editElement: null, // Removed inline edit
-
-                openEditWebsite: function () {
-                    document.getElementById('admin-cms-modal').classList.remove('hidden');
-                    this.switchCMSTab('home'); // Default
+                loadDashboard: function() {
+                    const list = document.getElementById('admin-course-list');
+                    list.innerHTML = app.state.courses.map(c => `
+                        <div class="card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <div><strong>${c.title}</strong></div>
+                            <button class="btn btn-secondary" onclick='app.admin.openCourseCreator(${JSON.stringify(c)})'>Edit</button>
+                        </div>
+                    `).join('');
                 },
 
-                switchCMSTab: function (tab) {
-                    // Update Sidebar Buttons
-                    document.querySelectorAll('#admin-cms-modal button[id^="tab-btn-"]').forEach(b => b.style.background = 'rgba(255,255,255,0.1)');
-                    document.getElementById(`tab-btn-${tab}`).style.background = 'var(--primary)';
+                openEditWebsite: function() {
+                    document.getElementById('admin-cms-modal').classList.remove('hidden');
+                    this.renderCMSTab('home');
+                },
 
-                    const container = document.getElementById('cms-content-area');
-                    if (tab === 'home') {
+                renderCMSTab: function(tab) {
+                    const container = document.getElementById('cms-form-area');
+                    const cfg = app.state.config;
+                    
+                    if(tab === 'home') {
                         container.innerHTML = `
-                            <h3 style="margin-bottom:20px; color:var(--text-muted);">Home Page HEADER</h3>
-                            <div class="input-group">
-                                <label>Hero Title</label>
-                                <input type="text" id="cms-home-title" class="form-input" value="${document.getElementById('hero-title').innerText}">
-                            </div>
-                            <div class="input-group">
-                                <label>Hero Description</label>
-                                <textarea id="cms-home-text" class="form-input" rows="3" style="color:var(--text-main);">${document.getElementById('hero-text').innerText}</textarea>
-                            </div>
-                            
-                            <h4 style="margin-top:20px; color:var(--text-muted);">Branding</h4>
-                            <div class="input-group">
-                                <label>Business Logo URL (Mock)</label>
-                                <div style="display:flex; gap:10px;">
-                                    <input type="text" id="cms-logo-url" class="form-input" placeholder="Current: Default W Icon" value="">
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <label>Hero Image URL (Mock)</label>
-                                <div style="display:flex; gap:10px;">
-                                    <input type="text" class="form-input" placeholder="https://example.com/image.jpg" value="">
-                                    <button class="btn btn-secondary" style="border:1px solid var(--border);" onclick="app.admin.triggerMockUpload(null)">Upload</button>
-                                </div>
-                            </div>
-
-                            <h4 style="margin-top:20px; color:var(--text-muted);">Sections</h4>
-                            <div class="input-group">
-                                <label>Corporate Section Title</label>
-                                <input type="text" id="cms-corp-title" class="form-input" value="${document.getElementById('corp-title').innerText}">
-                            </div>
+                            <h3>Home Page</h3>
+                            <div class="input-group"><label>Hero Title</label><input type="text" id="cms-home-title" class="form-input" value="${cfg.homepageTitle || ''}"></div>
+                            <div class="input-group"><label>Hero Text</label><textarea id="cms-home-text" class="form-input">${cfg.homepageText || ''}</textarea></div>
+                            <div class="input-group"><label>Corp Section Title</label><input type="text" id="cms-corp-title" class="form-input" value="${cfg.corpTitle || ''}"></div>
                         `;
-                    } else if (tab === 'about') {
+                    } else if(tab === 'about') {
+                        const founders = cfg.foundersJson ? JSON.parse(cfg.foundersJson) : [];
+                        const team = cfg.teamJson ? JSON.parse(cfg.teamJson) : [];
+                        
+                        // Helper to generate inputs for array
+                        const renderPersonInputs = (arr, prefix) => arr.map((p,i) => `
+                            <div style="display:flex; gap:10px; margin-bottom:5px;">
+                                <input type="text" class="form-input cms-${prefix}-name" value="${p.name}" placeholder="Name">
+                                <input type="text" class="form-input cms-${prefix}-title" value="${p.title}" placeholder="Title">
+                            </div>
+                        `).join('');
+
                         container.innerHTML = `
-                            <h3 style="margin-bottom:20px; color:var(--text-muted);">About Page Content</h3>
-                             <div class="input-group"><label>About Heading</label><input type="text" id="cms-about-h1" class="form-input" value="About WAE"></div>
-                             
-                             <h4 style="margin-top:20px; color:var(--text-muted);">Leadership</h4>
-                             <div style="display:flex; gap:10px;">
-                                <div class="input-group" style="flex:1;">
-                                    <label>Founder 1 Name</label>
-                                    <input type="text" id="cms-f1-name" class="form-input" value="${document.getElementById('founder-1-name') ? document.getElementById('founder-1-name').innerText : ''}">
-                                </div>
-                                <div class="input-group" style="flex:1;">
-                                    <label>Founder 1 Title</label>
-                                    <input type="text" id="cms-f1-title" class="form-input" value="${document.getElementById('founder-1-title') ? document.getElementById('founder-1-title').innerText : ''}">
-                                </div>
-                             </div>
-                             <div style="display:flex; gap:10px;">
-                                <div class="input-group" style="flex:1;">
-                                    <label>Founder 2 Name</label>
-                                    <input type="text" id="cms-f2-name" class="form-input" value="${document.getElementById('founder-2-name') ? document.getElementById('founder-2-name').innerText : ''}">
-                                </div>
-                                <div class="input-group" style="flex:1;">
-                                    <label>Founder 2 Title</label>
-                                    <input type="text" id="cms-f2-title" class="form-input" value="${document.getElementById('founder-2-title') ? document.getElementById('founder-2-title').innerText : ''}">
-                                </div>
-                             </div>
-                             <div style="display:flex; gap:10px;">
-                                <div class="input-group" style="flex:1;">
-                                    <label>Founder 3 Name</label>
-                                    <input type="text" id="cms-f3-name" class="form-input" value="${document.getElementById('founder-3-name') ? document.getElementById('founder-3-name').innerText : ''}">
-                                </div>
-                                <div class="input-group" style="flex:1;">
-                                    <label>Founder 3 Title</label>
-                                    <input type="text" id="cms-f3-title" class="form-input" value="${document.getElementById('founder-3-title') ? document.getElementById('founder-3-title').innerText : ''}">
-                                </div>
-                             </div>
-
-                             <h4 style="margin-top:20px; color:var(--text-muted);">Core Team</h4>
-                             <div style="display:flex; gap:10px;">
-                                <div class="input-group" style="flex:1;"><label>Team 1 Name</label><input type="text" id="cms-t1-name" class="form-input" value="${document.getElementById('team-1-name') ? document.getElementById('team-1-name').innerText : ''}"></div>
-                                <div class="input-group" style="flex:1;"><label>Team 1 Title</label><input type="text" id="cms-t1-title" class="form-input" value="${document.getElementById('team-1-title') ? document.getElementById('team-1-title').innerText : ''}"></div>
-                             </div>
-                             <div style="display:flex; gap:10px;">
-                                <div class="input-group" style="flex:1;"><label>Team 2 Name</label><input type="text" id="cms-t2-name" class="form-input" value="${document.getElementById('team-2-name') ? document.getElementById('team-2-name').innerText : ''}"></div>
-                                <div class="input-group" style="flex:1;"><label>Team 2 Title</label><input type="text" id="cms-t2-title" class="form-input" value="${document.getElementById('team-2-title') ? document.getElementById('team-2-title').innerText : ''}"></div>
-                             </div>
-                             <div style="display:flex; gap:10px;">
-                                <div class="input-group" style="flex:1;"><label>Team 3 Name</label><input type="text" id="cms-t3-name" class="form-input" value="${document.getElementById('team-3-name') ? document.getElementById('team-3-name').innerText : ''}"></div>
-                                <div class="input-group" style="flex:1;"><label>Team 3 Title</label><input type="text" id="cms-t3-title" class="form-input" value="${document.getElementById('team-3-title') ? document.getElementById('team-3-title').innerText : ''}"></div>
-                             </div>
-
-                             <h4 style="margin-top:20px; color:var(--text-muted);">Vision & History</h4>
-                             <div class="input-group"><label>Vision Title</label><input type="text" id="cms-vis-title" class="form-input" value="Our Vision"></div>
-                             <div class="input-group"><label>Vision Text</label><textarea id="cms-vis-text" class="form-input" rows="2">To be the global leader...</textarea></div>
-                              <div class="input-group"><label>History Title</label><input type="text" id="cms-his-title" class="form-input" value="Our History"></div>
-                             <div class="input-group"><label>History Text</label><textarea id="cms-his-text" class="form-input" rows="2">Started as a small...</textarea></div>
+                            <h3>About Page</h3>
+                            <div class="input-group"><label>Vision Text</label><textarea id="cms-vis-text" class="form-input">${cfg.aboutVision || ''}</textarea></div>
+                            <div class="input-group"><label>History Text</label><textarea id="cms-his-text" class="form-input">${cfg.aboutHistory || ''}</textarea></div>
+                            
+                            <h4>Founders (Top Leadership)</h4>
+                            <div id="cms-founders-list">${renderPersonInputs(founders, 'f')}</div>
+                            
+                            <h4>Core Team</h4>
+                            <div id="cms-team-list">${renderPersonInputs(team, 't')}</div>
                         `;
                     }
                 },
 
-                openCourseCreator: function (courseId) {
+                saveWebsiteChanges: function() {
+                    const items = [];
+                    // Gather Home Data if present
+                    if(document.getElementById('cms-home-title')) {
+                        items.push({key: 'homepageTitle', value: document.getElementById('cms-home-title').value});
+                        items.push({key: 'homepageText', value: document.getElementById('cms-home-text').value});
+                        items.push({key: 'corpTitle', value: document.getElementById('cms-corp-title').value});
+                    }
+                    // Gather About Data if present
+                    if(document.getElementById('cms-vis-text')) {
+                        items.push({key: 'aboutVision', value: document.getElementById('cms-vis-text').value});
+                        items.push({key: 'aboutHistory', value: document.getElementById('cms-his-text').value});
+                        
+                        // Parse Founder Inputs
+                        const fNames = document.querySelectorAll('.cms-f-name');
+                        const fTitles = document.querySelectorAll('.cms-f-title');
+                        const fData = Array.from(fNames).map((el, i) => ({name: el.value, title: fTitles[i].value}));
+                        items.push({key: 'foundersJson', value: JSON.stringify(fData)});
+
+                        // Parse Team Inputs
+                        const tNames = document.querySelectorAll('.cms-t-name');
+                        const tTitles = document.querySelectorAll('.cms-t-title');
+                        const tData = Array.from(tNames).map((el, i) => ({name: el.value, title: tTitles[i].value}));
+                        items.push({key: 'teamJson', value: JSON.stringify(tData)});
+                    }
+
+                    app.callApi('saveWebsiteContent', { items: items }, 'POST').then(res => {
+                        if(res && res.status === 'success') {
+                            alert('Website Updated!');
+                            location.reload(); // Reload to fetch new public data
+                        }
+                    });
+                },
+
+                // Course Creator Logic
+                openCourseCreator: function(courseObj = null) {
                     const modal = document.getElementById('course-creator-modal');
                     modal.classList.remove('hidden');
                     document.getElementById('new-course-modules').innerHTML = '';
 
-                    if (courseId) {
-                        // EDIT MODE
-                        modal.querySelector('h2').innerText = 'Edit Course';
-                        document.getElementById('new-course-title').value = courseId; // Using ID as title for mock
-                        document.getElementById('new-course-desc').value = "Mock Description for " + courseId;
-                        this.addModuleUI(); // Add existing module mock
+                    if(courseObj) {
+                        document.getElementById('course-modal-title').innerText = 'Edit Course';
+                        document.getElementById('edit-course-id').value = courseObj.courseId;
+                        document.getElementById('new-course-title').value = courseObj.title;
+                        document.getElementById('new-course-desc').value = courseObj.desc;
+                        document.getElementById('new-course-thumb').value = courseObj.thumbnail;
+                        // Parse Modules
+                        /* For simplicity in this demo, modules_json handling would be complex to fully rebuild UI. 
+                           We will add one empty module UI or need a robust parser. 
+                           Here we allow adding new modules. Real prod needs full JSON parser back to UI. */
                     } else {
-                        // CREATE MODE
-                        modal.querySelector('h2').innerText = 'Create New Course';
+                        document.getElementById('course-modal-title').innerText = 'Create New Course';
+                        document.getElementById('edit-course-id').value = '';
                         document.getElementById('new-course-title').value = '';
                         document.getElementById('new-course-desc').value = '';
-                        this.addModuleUI(); // Add default empty module
+                        document.getElementById('new-course-thumb').value = '';
+                        this.addModuleUI();
                     }
                 },
 
-                triggerMockUpload: function (targetInputId) {
-                    // If targetInputId is passed, we populate that input with the result
-                    // For this simplified version we just alert
-                    const file = prompt("SIMULATION: Choose a file from your computer (Enter filename for mock):", "image.jpg");
-                    if (file) {
-                        alert(`File '${file}' uploaded to Mock Drive! ID: FILE_${Math.floor(Math.random() * 1000)}`);
-                        if (targetInputId) document.getElementById(targetInputId).value = `https://drive.google.com/uc?id=FILE_MOCK`;
-                    }
-                },
-
-                addModuleUI: function () {
-                    const container = document.getElementById('new-course-modules');
-                    const modId = 'mod-' + Date.now();
+                addModuleUI: function() {
+                    const id = Date.now();
                     const html = `
-                    <div class="card" style="margin-bottom:15px; border:1px solid var(--border); padding:15px;" id="${modId}">
-                        <div style="display:flex; justify-content:space-between;">
-                            <input type="text" class="form-input" placeholder="Module Title" style="font-weight:bold; margin-bottom:10px;">
-                            <button class="btn btn-secondary" style="font-size:0.8rem; height:30px;" onclick="document.getElementById('${modId}').remove()">Remove</button>
-                        </div>
-                        <div class="lessons-container" style="padding-left:15px; border-left:2px solid var(--border);">
-                             <!-- Lessons go here -->
-                        </div>
-                        <button class="btn btn-secondary" style="font-size:0.8rem; margin-top:10px;" onclick="app.admin.addLessonUI('${modId}')">+ Add Lesson</button>
+                    <div class="card module-item" style="padding:15px; margin-bottom:10px;">
+                        <input type="text" class="form-input mod-title" placeholder="Module Title">
+                        <div class="lessons-area" style="margin-left:20px; border-left:2px solid var(--border); padding-left:10px;"></div>
+                        <button class="btn btn-secondary" onclick="app.admin.addLessonUI(this)">+ Add Lesson</button>
                     </div>`;
-                    container.insertAdjacentHTML('beforeend', html);
+                    document.getElementById('new-course-modules').insertAdjacentHTML('beforeend', html);
                 },
 
-                addLessonUI: function (modId) {
-                    const modDiv = document.getElementById(modId);
-                    const lessonsCont = modDiv.querySelector('.lessons-container');
-                    const lessonHTML = `
-                    <div style="display:flex; gap:10px; margin-top:5px; align-items:center;">
-                        <input type="text" class="form-input" placeholder="Lesson Title" style="flex-grow:1;">
-                        <select class="form-input" style="width:100px;">
-                             <option>Video</option>
-                             <option>PDF</option>
-                        </select>
-                        <button class="btn btn-secondary" onclick="app.admin.triggerMockUpload(null)">Upload Media</button>
+                addLessonUI: function(btn) {
+                    const html = `<div class="lesson-item" style="display:flex; gap:5px; margin-top:5px;">
+                        <input type="text" class="form-input less-title" placeholder="Lesson Title">
+                        <input type="text" class="form-input less-url" placeholder="Video/PDF URL">
                     </div>`;
-                    lessonsCont.insertAdjacentHTML('beforeend', lessonHTML);
+                    btn.previousElementSibling.insertAdjacentHTML('beforeend', html);
                 },
 
-                saveWebsiteChanges: function () {
-                    // Update DOM immediately (Mock)
-                    if (document.getElementById('cms-home-title')) {
-                        const newTitle = document.getElementById('cms-home-title').value;
-                        const newText = document.getElementById('cms-home-text').value;
-                        const newCorp = document.getElementById('cms-corp-title').value;
-
-                        document.getElementById('hero-title').innerText = newTitle;
-                        document.getElementById('hero-text').innerText = newText;
-                        document.getElementById('corp-title').innerText = newCorp;
-
-                        // Logo Update (Mock logic)
-                        const logoUrl = document.getElementById('cms-logo-url') ? document.getElementById('cms-logo-url').value : '';
-                        if (logoUrl && logoUrl.trim() !== "") {
-                            console.log("Mock Logo Updated to: " + logoUrl);
-                            document.getElementById('header-logo-icon').style.background = `url(${logoUrl}) center/cover no-repeat`;
-                            document.getElementById('header-logo-icon').innerText = '';
-                        }
-                    }
-
-                    if (document.getElementById('cms-f1-name')) {
-                        if (document.getElementById('founder-1-name')) document.getElementById('founder-1-name').innerText = document.getElementById('cms-f1-name').value;
-                        if (document.getElementById('founder-1-title')) document.getElementById('founder-1-title').innerText = document.getElementById('cms-f1-title').value;
-                        if (document.getElementById('founder-2-name')) document.getElementById('founder-2-name').innerText = document.getElementById('cms-f2-name').value;
-                        if (document.getElementById('founder-2-title')) document.getElementById('founder-2-title').innerText = document.getElementById('cms-f2-title').value;
-                        if (document.getElementById('founder-3-name')) document.getElementById('founder-3-name').innerText = document.getElementById('cms-f3-name').value;
-                        if (document.getElementById('founder-3-title')) document.getElementById('founder-3-title').innerText = document.getElementById('cms-f3-title').value;
-
-                        // Core Team
-                        if (document.getElementById('team-1-name')) document.getElementById('team-1-name').innerText = document.getElementById('cms-t1-name').value;
-                        if (document.getElementById('team-1-title')) document.getElementById('team-1-title').innerText = document.getElementById('cms-t1-title').value;
-                        if (document.getElementById('team-2-name')) document.getElementById('team-2-name').innerText = document.getElementById('cms-t2-name').value;
-                        if (document.getElementById('team-2-title')) document.getElementById('team-2-title').innerText = document.getElementById('cms-t2-title').value;
-                        if (document.getElementById('team-3-name')) document.getElementById('team-3-name').innerText = document.getElementById('cms-t3-name').value;
-                        if (document.getElementById('team-3-title')) document.getElementById('team-3-title').innerText = document.getElementById('cms-t3-title').value;
-                    }
-
-                    alert('Changes Saved Successfully!');
-                    document.getElementById('admin-cms-modal').classList.add('hidden');
-                },
-
-                saveNewCourse: function () {
+                saveNewCourse: function() {
                     const title = document.getElementById('new-course-title').value;
-                    if (!title) { alert('Enter Course Title'); return; }
-                    alert(`Course '${title}' Created! \n(Modules and Lessons linked in Mock DB)`);
-                    document.getElementById('course-creator-modal').classList.add('hidden');
+                    const desc = document.getElementById('new-course-desc').value;
+                    const thumb = document.getElementById('new-course-thumb').value;
+                    const id = document.getElementById('edit-course-id').value;
+
+                    // Scrape Modules
+                    const mods = [];
+                    document.querySelectorAll('.module-item').forEach((m, i) => {
+                        const mTitle = m.querySelector('.mod-title').value;
+                        const lessons = [];
+                        m.querySelectorAll('.lesson-item').forEach(l => {
+                            lessons.push({
+                                title: l.querySelector('.less-title').value,
+                                url: l.querySelector('.less-url').value
+                            });
+                        });
+                        mods.push({ id: i+1, title: mTitle, lessons: lessons });
+                    });
+
+                    const payload = {
+                        courseId: id,
+                        title: title,
+                        desc: desc,
+                        thumbnail: thumb,
+                        modules_json: JSON.stringify(mods)
+                    };
+
+                    app.callApi('saveCourse', payload, 'POST').then(res => {
+                        if(res && res.status === 'success') {
+                            alert('Course Saved!');
+                            document.getElementById('course-creator-modal').classList.add('hidden');
+                            this.loadDashboard(); // Refresh list
+                        }
+                    });
                 }
             }
         };
 
-        // --- GLOBAL ACTIONS ---
-        function startLogin() {
-            if (app.MOCK_MODE) {
-                alert('In Mock Mode: Use the bottom-left buttons to simulate login roles.');
-            } else {
-                // Initialize GIS
-                /* global google */
-                console.log('Initializing Google Login...');
-                google.accounts.id.initialize({
-                    client_id: '422382896776-uh8e06n96ijen18p8ln527o9cg08sjr8.apps.googleusercontent.com', // Replace with Actual Client ID from Cloud Console
-                    callback: handleCredentialResponse
-                });
-                google.accounts.id.prompt((notification) => {
-                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                        console.log('OneTap Skipped/Not Displayed. Try manual button render if needed.');
-                        // Fallback or explicit button could go here
-                    }
-                });
-            }
-        }
-
-        // Callback for Google Sign-In
+        // GOOGLE AUTH HANDLER
         function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-
-            // Send to Backend for Verification via Fetch API
-            app.callApi('loginUser', { token: response.credential }, 'POST')
-                .then(result => {
-                    if (result && result.status === 'success') {
-                        console.log('Login Success:', result);
-                        app.state.user = {
-                            email: result.email,
-                            role: result.role,
-                            name: result.name
-                        };
-                        app.updateUIForAuth();
-                        if (result.role === 'admin') app.router.go('admin-dash');
-                        else app.router.go('student-dash');
-                    } else {
-                        alert('Login Failed: ' + (result ? result.message : 'Unknown Error'));
-                    }
-                })
-                .catch(err => {
-                    console.error('Login API Error', err);
-                    // Alert handled in callApi
-                });
+            console.log("Token received");
+            app.callApi('loginUser', { token: response.credential }, 'POST').then(res => {
+                if(res && res.status === 'success') {
+                    app.state.user = res;
+                    app.updateUIForAuth();
+                    if(res.role === 'admin') app.router.go('admin-dash');
+                    else app.router.go('student-dash');
+                } else {
+                    alert('Login Failed');
+                }
+            });
         }
 
-        // --- DEV HELPERS ---
-        function mockLogin(role) {
-            console.log('Mock Login Triggered:', role);
-            try {
-                if (!app) { console.error('App not initialized'); return; }
-                app.auth.login(role);
-                console.log('Mock Login Success');
-            } catch (e) {
-                console.error('Mock Login Failed:', e);
-                alert('Mock Login Failed: ' + e.message);
-            }
-        }
-
-        // START
         window.onload = () => app.init();
-
     </script>
 </body>
-
-
 </html>

@@ -603,7 +603,7 @@
                         <div class="input-group">
                             <label>Thumbnail</label>
                             <div style="border:1px dashed var(--border); padding:20px; text-align:center; border-radius:8px; cursor:pointer;"
-                                onclick="app.admin.promptFileUrl(null)">
+                                onclick="app.admin.triggerMockUpload(null)">
                                 <span class="material-icons-round">add_photo_alternate</span>
                                 <p style="font-size:0.8rem; color:var(--text-muted);">Click to Upload Thumbnail</p>
                             </div>
@@ -627,7 +627,7 @@
             <div class="course-grid">
                 <div class="card">
                     <h3>Total Students</h3>
-                    <p style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="stat-total-students">0</p>
+                    <p style="font-size: 2rem; font-weight: 800; color: var(--primary);">142</p>
                 </div>
                 <div class="card">
                     <h3>Total Sales</h3>
@@ -641,9 +641,14 @@
                     Create
                     New Course</button>
 
-                <!-- Mock List Removed -> Rendered via JS -->
-                <div style="margin-top: 20px;" id="admin-course-list">
-                    <p style="color:var(--text-muted); font-size:0.9rem;">Loading courses...</p>
+                <!-- Mock List -->
+                <div style="margin-top: 20px;">
+                    <div class="card"
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <span>Demo Course 1</span>
+                        <button class="btn btn-secondary" style="font-size:0.8rem;"
+                            onclick="app.admin.openCourseCreator('Demo Course 1')">Edit</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -655,7 +660,7 @@
         // --- APP CORE ---
         const app = {
             // REPLACE THIS WITH YOUR DEPLOYED GAS WEB APP URL
-            GAS_API_URL: 'YOUR_GAS_DEPLOYMENT_URL_HERE',
+            GAS_API_URL: 'https://script.google.com/macros/s/AKfycbx2qRAqozx8KYpb9JKx2HzvvBO4mBcbOsz9KoI5C2bPbARqUDK0ASCT7zMAOHFp8wRU/exec',
 
             state: {
                 user: null, // { email, role: 'student' | 'admin' }
@@ -677,13 +682,8 @@
                 document.getElementById('nav-btn-about').onclick = () => this.router.go('about');
                 document.getElementById('nav-btn-login').onclick = () => this.router.go('login');
                 document.getElementById('nav-btn-dashboard').onclick = () => {
-                    if (this.state.user?.role === 'admin') {
-                        this.admin.loadDashboard();
-                        this.router.go('admin-dash');
-                    } else {
-                        this.loadStudentCourses(); // Refresh student data
-                        this.router.go('student-dash');
-                    }
+                    if (this.state.user?.role === 'admin') this.router.go('admin-dash');
+                    else this.router.go('student-dash');
                 };
                 document.getElementById('nav-btn-logout').onclick = () => this.auth.logout();
             },
@@ -716,20 +716,21 @@
             },
 
             loadPublicData: function () {
-                // Remove Mock Data - Always Fetch from API
+                if (this.MOCK_MODE) {
+                    // Mock Data
+                    this.renderPublicCourses([
+                        { title: 'Corporate Leadership', desc: 'Master the art of leading.', thumbnail: '' },
+                        { title: 'Excel Mastery', desc: 'Advanced spreadsheets.', thumbnail: '' }
+                    ]);
+                    return;
+                }
+
+                // GAS Fetch Call
                 this.callApi('getPublicContent').then(data => {
                     if (!data) return;
                     this.state.config = data.config;
                     this.renderPublicCourses(data.courses);
-
-                    // Bind Config
                     if (data.config.homepageTitle) document.getElementById('hero-title').innerText = data.config.homepageTitle;
-
-                    // Bind Stats (if elements exist)
-                    if (data.stats) {
-                        if (document.getElementById('stat-total-students')) document.getElementById('stat-total-students').innerText = data.stats.students;
-                        if (document.getElementById('stat-total-courses')) document.getElementById('stat-total-courses').innerText = data.stats.courses;
-                    }
                 });
             },
 
@@ -797,64 +798,44 @@
                 if (loggedIn) {
                     document.getElementById('nav-btn-dashboard').innerText = user.role === 'admin' ? 'Admin Panel' : 'My Learning';
                     if (user.role === 'student') this.loadStudentCourses();
-                    if (user.role === 'admin') this.admin.loadDashboard();
                 } else {
                     // Ensure admin specific UI is cleaned up on logout if necessary
                 }
             },
 
             loadStudentCourses: function () {
-                if (!this.state.user) return;
+                try {
+                    console.log('Loading student courses...');
+                    const list = [
+                        { id: 1, title: 'Corporate Leadership', progress: 10 },
+                        { id: 2, title: 'Excel Mastery', progress: 80 }
+                    ];
 
-                console.log('Loading student courses...');
-                this.callApi('getStudentData', { email: this.state.user.email }, 'POST').then(data => {
                     const container = document.getElementById('student-course-list');
-                    if (!container) return;
-
-                    if (data && data.enrolledCourses && data.enrolledCourses.length > 0) {
-                        container.innerHTML = data.enrolledCourses.map(c => `
-                          <div class="card course-card">
-                            <div style="height:140px; background:#334155; display:flex; align-items:center; justify-content:center; border-radius:8px; margin-bottom:15px; overflow:hidden;">
-                                 ${c.thumbnail ? `<img src="${c.thumbnail}" style="width:100%; height:100%; object-fit:cover;">` : `<span class="material-icons-round" style="font-size:40px; color:var(--text-muted);">play_circle</span>`}
-                            </div>
-                            <h3>${c.title}</h3>
-                            <div style="margin-top:10px; height:4px; background:#334155; border-radius:2px;">
-                                <div style="width: ${c.progress}%; height:100%; background:var(--primary); border-radius:2px;"></div>
-                            </div>
-                            <p style="margin-top:5px; font-size:0.8rem; color:var(--text-muted);">${c.progress}% Complete</p>
-                            <button class="btn btn-secondary" style="width:100%; margin-top:15px;" onclick="app.router.go('course-player')">Continue Learning</button>
-                          </div>
-                        `).join('');
-                    } else {
-                        container.innerHTML = '<p style="color:var(--text-muted);">You are not enrolled in any courses yet.</p>';
+                    if (!container) {
+                        console.error('Student course list container not found!');
+                        return;
                     }
-                });
+                    container.innerHTML = list.map(c => `
+              <div class="card course-card">
+                <div style="height:140px; background:#334155; display:flex; align-items:center; justify-content:center; border-radius:8px; margin-bottom:15px;">
+                     <span class="material-icons-round" style="font-size:40px; color:var(--text-muted);">play_circle</span>
+                </div>
+                <h3>${c.title}</h3>
+                <div style="margin-top:10px; height:4px; background:#334155; border-radius:2px;">
+                    <div style="width: ${c.progress}%; height:100%; background:var(--primary); border-radius:2px;"></div>
+                </div>
+                <p style="margin-top:5px; font-size:0.8rem; color:var(--text-muted);">${c.progress}% Complete</p>
+                <button class="btn btn-secondary" style="width:100%; margin-top:15px;" onclick="app.router.go('course-player')">Continue Learning</button>
+              </div>
+            `).join('');
+                } catch (e) {
+                    console.error('Error loading student courses:', e);
+                }
             },
 
             admin: {
-                editElement: null,
-
-                // Load Dynamic Admin Data
-                loadDashboard: function () {
-                    console.log('Loading Admin Dashboard Data...');
-                    app.callApi('adminGetDashboardData', {}, 'POST').then(data => {
-                        if (data) {
-                            if (document.getElementById('stat-total-students')) document.getElementById('stat-total-students').innerText = data.students;
-                            // Render Course List
-                            const container = document.getElementById('admin-course-list');
-                            if (data.courses && data.courses.length > 0) {
-                                container.innerHTML = data.courses.map(c => `
-                                    <div class="card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                                        <span>${c.title}</span>
-                                        <button class="btn btn-secondary" style="font-size:0.8rem;" onclick="app.admin.openCourseCreator('${c.courseId}')">Edit</button>
-                                    </div>
-                                 `).join('');
-                            } else {
-                                container.innerHTML = '<p style="color:var(--text-muted);">No courses found. Create one above.</p>';
-                            }
-                        }
-                    });
-                },
+                editElement: null, // Removed inline edit
 
                 openEditWebsite: function () {
                     document.getElementById('admin-cms-modal').classList.remove('hidden');
@@ -890,7 +871,7 @@
                                 <label>Hero Image URL (Mock)</label>
                                 <div style="display:flex; gap:10px;">
                                     <input type="text" class="form-input" placeholder="https://example.com/image.jpg" value="">
-                                    <button class="btn btn-secondary" style="border:1px solid var(--border);" onclick="app.admin.promptFileUrl(null)">Upload</button>
+                                    <button class="btn btn-secondary" style="border:1px solid var(--border);" onclick="app.admin.triggerMockUpload(null)">Upload</button>
                                 </div>
                             </div>
 
@@ -969,8 +950,7 @@
                         // EDIT MODE
                         modal.querySelector('h2').innerText = 'Edit Course';
                         document.getElementById('new-course-title').value = courseId; // Using ID as title for mock
-                        document.getElementById('new-course-title').value = courseId;
-                        document.getElementById('new-course-desc').value = ""; // Load real desc if available or leave blank
+                        document.getElementById('new-course-desc').value = "Mock Description for " + courseId;
                         this.addModuleUI(); // Add existing module mock
                     } else {
                         // CREATE MODE
@@ -981,10 +961,13 @@
                     }
                 },
 
-                promptFileUrl: function (targetInputId) {
-                    const url = prompt("Enter the Direct URL for your image/file (e.g. from Google Drive):", "");
-                    if (url) {
-                        if (targetInputId) document.getElementById(targetInputId).value = url;
+                triggerMockUpload: function (targetInputId) {
+                    // If targetInputId is passed, we populate that input with the result
+                    // For this simplified version we just alert
+                    const file = prompt("SIMULATION: Choose a file from your computer (Enter filename for mock):", "image.jpg");
+                    if (file) {
+                        alert(`File '${file}' uploaded to Mock Drive! ID: FILE_${Math.floor(Math.random() * 1000)}`);
+                        if (targetInputId) document.getElementById(targetInputId).value = `https://drive.google.com/uc?id=FILE_MOCK`;
                     }
                 },
 
@@ -1015,7 +998,7 @@
                              <option>Video</option>
                              <option>PDF</option>
                         </select>
-                        <button class="btn btn-secondary" onclick="app.admin.promptFileUrl(null)">Upload Media</button>
+                        <button class="btn btn-secondary" onclick="app.admin.triggerMockUpload(null)">Upload Media</button>
                     </div>`;
                     lessonsCont.insertAdjacentHTML('beforeend', lessonHTML);
                 },
@@ -1136,5 +1119,6 @@
 
     </script>
 </body>
+
 
 </html>

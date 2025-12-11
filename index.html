@@ -3,76 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <title>Winner Academy WAE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <style>
         :root {
-            --primary: #D97706; --primary-hover: #B45309; --secondary: #EC4899;
-            --dark-bg: #FFFFFF; --card-bg: #F8FAFC; --text-main: #0F172A; --text-muted: #64748B;
-            --border: #E2E8F0; --glass-bg: rgba(255, 255, 255, 0.9);
-            --radius: 12px;
+            /* PROFESSIONAL PINK THEME */
+            --primary: #db2777;       /* Pink 600 */
+            --primary-hover: #be185d; /* Pink 700 */
+            --primary-light: #fdf2f8; /* Pink 50 */
+            
+            /* NEUTRALS */
+            --bg-body: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --text-main: #1e293b;     /* Slate 800 */
+            --text-muted: #64748b;    /* Slate 500 */
+            --border: #e2e8f0;        /* Slate 200 */
+            
+            /* FOOTER */
+            --footer-bg: #111827;
+            --footer-text: #f3f4f6;
+
+            --radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--dark-bg); color: var(--text-main); overflow-x: hidden; min-height: 100vh; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main { flex: 1; } /* Pushes footer down */
+        
         .hidden { display: none !important; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .btn { padding: 10px 20px; border-radius: var(--radius); border: none; cursor: pointer; font-weight: 600; transition: all 0.2s; font-family: 'Inter', sans-serif; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
-        .btn-secondary { background: #e2e8f0; color: var(--text-main); }
-        .btn-secondary:hover { background: #cbd5e1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         
-        /* Layouts */
-        header { position: sticky; top: 0; z-index: 100; background: var(--glass-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 15px 0; }
+        /* BUTTONS */
+        .btn { 
+            padding: 10px 24px; 
+            border-radius: var(--radius); 
+            border: none; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: all 0.2s ease; 
+            font-family: 'Inter', sans-serif; 
+            font-size: 0.95rem;
+        }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 2px 4px rgba(219, 39, 119, 0.3); }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 6px rgba(219, 39, 119, 0.4); }
+        
+        .btn-secondary { background: white; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+
+        /* HEADER */
+        header { 
+            position: sticky; top: 0; z-index: 100; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid var(--border); 
+            padding: 15px 0; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
         .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; display:flex; align-items:center; gap:10px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .hero { text-align: center; padding: 80px 20px 40px; }
-        .hero h1 { font-family: 'Outfit', sans-serif; font-size: 3.5rem; margin-bottom: 20px; color: var(--text-main); }
         
-        /* Sub-heading style */
+        .logo { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            color: var(--text-main);
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            text-decoration: none;
+        }
+        /* Bigger Logo */
+        .logo img { height: 60px; border-radius: 8px; box-shadow: var(--shadow); }
+        .logo span { background: linear-gradient(90deg, var(--primary) 0%, #be185d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        nav { display: flex; gap: 10px; }
+
+        /* CARDS */
+        .card { 
+            background: var(--bg-card); 
+            border: 1px solid var(--border); 
+            border-radius: var(--radius); 
+            padding: 24px; 
+            box-shadow: var(--shadow); 
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover { box-shadow: var(--shadow-hover); }
+
+        /* HERO SECTION */
+        .hero { text-align: center; padding: 100px 20px 60px; }
+        .hero h1 { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 4rem; 
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px; 
+            color: var(--text-main); 
+            letter-spacing: -1px;
+        }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 40px; }
+
+        /* SUB HEADING BAR */
         .sub-heading-bar {
             text-align: center;
-            background: #fff7ed;
-            padding: 20px;
-            margin: 20px auto 60px;
-            border-radius: var(--radius);
-            max-width: 800px;
-            border: 1px dashed var(--primary);
+            background: var(--primary-light);
+            padding: 30px;
+            margin: 0 auto 80px;
+            border-radius: 16px;
+            max-width: 900px;
+            border: 1px solid #fbcfe8;
         }
-        .sub-heading-bar h3 { color: var(--primary); font-family: 'Outfit', sans-serif; font-size: 1.5rem; }
+        .sub-heading-bar h3 { color: var(--primary-hover); font-family: 'Outfit', sans-serif; font-size: 1.6rem; margin: 0; }
 
-        .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 40px; }
-        
-        /* Course Card Specifics */
-        .course-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background: #e2e8f0; }
-        .course-card h3 { margin-bottom: 10px; font-family: 'Outfit', sans-serif; color: var(--text-main); }
-        .course-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        /* COURSE GRID */
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; }
+        .course-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+        .course-card img { width: 100%; height: 200px; object-fit: cover; background: #f1f5f9; }
+        .course-content { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
+        .course-card h3 { margin-bottom: 12px; font-family: 'Outfit', sans-serif; font-size: 1.25rem; color: var(--text-main); }
+        .course-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
 
-        .form-input { width: 100%; padding: 10px; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; }
-        .input-group label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+        /* FORMS */
+        .form-input { 
+            width: 100%; padding: 12px; 
+            background: #fff; border: 1px solid var(--border); 
+            border-radius: var(--radius); margin-bottom: 15px; 
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus { outline: none; border-color: var(--primary); ring: 2px solid var(--primary-light); }
+        .input-group label { display: block; margin-bottom: 8px; color: var(--text-main); font-size: 0.9rem; font-weight: 600; }
+
+        /* FOOTER STYLE */
+        footer { background: var(--footer-bg); color: var(--footer-text); padding: 60px 0 30px; margin-top: 80px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; margin-bottom: 20px; color: white; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #9ca3af; text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--primary); }
+        .footer-bottom { border-top: 1px solid #374151; padding-top: 20px; text-align: center; color: #9ca3af; font-size: 0.9rem; }
+
     </style>
 </head>
 <body>
 
     <header>
         <div class="container nav-flex">
-            <div class="logo">
-                <img src="wae-logo.jpg" alt="WAE" style="height:40px; border-radius:8px;">
+            <a href="#" class="logo" onclick="app.router.go('home'); return false;">
+                <img src="wae-logo.jpg" alt="WAE Logo"> 
                 <span>WAE</span>
-            </div>
+            </a>
             <nav>
-                <button id="nav-btn-home" class="btn btn-secondary">Home</button>
-                <button id="nav-btn-about" class="btn btn-secondary">About Us</button>
-                <button id="nav-btn-courses" class="btn btn-secondary">Courses</button> 
-                <button id="nav-btn-login" class="btn btn-primary">Login</button>
-                <button id="nav-btn-dashboard" class="btn btn-primary hidden">Dashboard</button>
-                <button id="nav-btn-logout" class="btn btn-secondary hidden">Logout</button>
+                <button id="nav-btn-home" class="btn btn-secondary" style="border:none;">Home</button>
+                <button id="nav-btn-about" class="btn btn-secondary" style="border:none;">About</button>
+                <button id="nav-btn-courses" class="btn btn-secondary" style="border:none;">Courses</button> 
+                <button id="nav-btn-login" class="btn btn-primary" style="margin-left:10px;">Login</button>
+                <button id="nav-btn-dashboard" class="btn btn-primary hidden" style="margin-left:10px;">Dashboard</button>
+                <button id="nav-btn-logout" class="btn btn-secondary hidden" style="border:none; color:red;">Logout</button>
             </nav>
         </div>
     </header>
@@ -81,16 +186,19 @@
         <section id="view-home" class="container">
             <div class="hero">
                 <h1 id="hero-title">Winner Academy of Excellence</h1>
-                <p id="hero-text" style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Premium Training Service Provider.</p>
-                <button class="btn btn-primary" onclick="app.router.go('courses')">Browse Courses</button>
+                <p id="hero-text">Premium Training Service Provider.</p>
+                <button class="btn btn-primary" style="padding: 15px 35px; font-size: 1.1rem;" onclick="app.router.go('courses')">Explore Courses</button>
             </div>
             
             <div id="sub-heading-container" class="sub-heading-bar">
                 <h3 id="home-sub-heading-disp">Loading...</h3>
             </div>
 
-            <div id="public-courses-preview">
-                <h2 style="font-family:'Outfit'; text-align:center;">Featured Courses</h2>
+            <div id="public-courses-preview" style="margin-bottom: 60px;">
+                <div style="text-align:center; margin-bottom:40px;">
+                    <h2 style="font-family:'Outfit'; font-size:2.5rem; margin-bottom:10px;">Featured Courses</h2>
+                    <div style="width:60px; height:4px; background:var(--primary); margin:0 auto; border-radius:2px;"></div>
+                </div>
                 <div class="course-grid" id="course-list-home">
                      <div class="card"><h3>Loading...</h3></div>
                 </div>
@@ -100,7 +208,7 @@
         <section id="view-courses" class="container hidden" style="padding-top:40px;">
             <div style="text-align:center; max-width:800px; margin:0 auto 40px;">
                 <h1 style="font-family:'Outfit'; font-size:3rem; margin-bottom:10px;">Our Curriculum</h1>
-                <p style="color:var(--text-muted);">Explore our industry-standard courses designed for excellence.</p>
+                <p style="color:var(--text-muted); font-size:1.1rem;">Explore our industry-standard courses designed for excellence.</p>
             </div>
             <div class="course-grid" id="course-list-page">
                 <div class="card"><h3>Loading...</h3></div>
@@ -110,76 +218,117 @@
         <section id="view-about" class="container hidden" style="padding-top:40px;">
             <div style="text-align:center; max-width:800px; margin:0 auto;">
                 <h1 style="font-family:'Outfit'; font-size:3rem; margin-bottom:20px;">About WAE</h1>
-                <p style="color:var(--text-muted); font-size:1.1rem; line-height:1.6;">Founded in 2012, Winner Academy bridges the gap between academic knowledge and industry requirements.</p>
+                <p style="color:var(--text-muted); font-size:1.2rem; line-height:1.6;">Founded in 2012, Winner Academy bridges the gap between academic knowledge and industry requirements.</p>
             </div>
 
-            <div style="margin-top:60px; display:grid; grid-template-columns:1fr 1fr; gap:40px;">
-                <div class="card">
-                    <h3 style="color:var(--primary); margin-bottom:15px;" id="vis-title-disp">Our Vision</h3>
-                    <p style="color:var(--text-muted);" id="vis-text-disp">Loading...</p>
+            <div style="margin-top:60px; display:grid; grid-template-columns:repeat(auto-fit, minmax(350px, 1fr)); gap:40px;">
+                <div class="card" style="border-left: 5px solid var(--primary);">
+                    <h3 style="color:var(--primary); margin-bottom:15px; font-family:'Outfit'; font-size:1.5rem;" id="vis-title-disp">Our Vision</h3>
+                    <p style="color:var(--text-muted); line-height:1.7;" id="vis-text-disp">Loading...</p>
                 </div>
-                <div class="card">
-                    <h3 style="color:var(--secondary); margin-bottom:15px;" id="his-title-disp">Our History</h3>
-                    <p style="color:var(--text-muted);" id="his-text-disp">Loading...</p>
+                <div class="card" style="border-left: 5px solid var(--text-main);">
+                    <h3 style="color:var(--text-main); margin-bottom:15px; font-family:'Outfit'; font-size:1.5rem;" id="his-title-disp">Our History</h3>
+                    <p style="color:var(--text-muted); line-height:1.7;" id="his-text-disp">Loading...</p>
                 </div>
             </div>
 
-            <div style="margin-top:60px;">
-                <h2 style="font-family:'Outfit'; text-align:center; margin-bottom:40px;">Leadership</h2>
+            <div style="margin-top:80px;">
+                <h2 style="font-family:'Outfit'; text-align:center; margin-bottom:50px; font-size:2.5rem;">Leadership Team</h2>
                 <div id="founders-list-disp" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px;">
                 </div>
             </div>
         </section>
 
-        <section id="view-login" class="container hidden" style="max-width: 400px; margin-top: 50px;">
-            <div class="card" style="text-align: center;">
-                <h2 style="margin-bottom: 20px;">Welcome Back</h2>
-                <p style="color: var(--text-muted); margin-bottom: 20px;">Sign in with Google to access your courses.</p>
+        <section id="view-login" class="container hidden" style="max-width: 450px; margin-top: 80px;">
+            <div class="card" style="text-align: center; padding: 40px;">
+                <h2 style="margin-bottom: 10px; font-family:'Outfit';">Welcome Back</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Sign in with Google to access your courses.</p>
                 <div id="g_id_onload" 
                      data-client_id="422382896776-uh8e06n96ijen18p8ln527o9cg08sjr8.apps.googleusercontent.com" 
                      data-callback="handleCredentialResponse" 
                      data-auto_prompt="false">
                 </div>
-                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left"></div>
+                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center"></div>
             </div>
         </section>
 
-        <section id="view-student-dash" class="container hidden" style="margin-top: 30px;">
-            <h1>My Learning</h1>
+        <section id="view-student-dash" class="container hidden" style="margin-top: 40px;">
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 30px;">
+                <h1 style="font-family:'Outfit';">My Learning Dashboard</h1>
+            </div>
             <div class="course-grid" id="student-course-list">
                  <div class="card">No courses enrolled yet.</div>
             </div>
         </section>
 
-        <section id="view-admin-dash" class="container hidden" style="margin-top: 30px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h1>Admin Control Panel</h1>
+        <section id="view-admin-dash" class="container hidden" style="margin-top: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; background: var(--primary-light); padding: 30px; border-radius: var(--radius);">
+                <div>
+                    <h1 style="font-family:'Outfit'; margin-bottom: 5px;">Admin Control Panel</h1>
+                    <p style="color: var(--primary);">Manage content and curriculum</p>
+                </div>
                 <button class="btn btn-primary" onclick="app.admin.openEditWebsite()">Edit Website Content</button>
             </div>
 
-            <div style="margin-top: 40px;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h2>Course Management</h2>
+            <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                    <h2 style="font-family:'Outfit';">Course Management</h2>
                     <button class="btn btn-secondary" onclick="app.admin.openCourseCreator()">+ Create New Course</button>
                 </div>
-                <div id="admin-course-list" style="margin-top: 20px;">
+                <div id="admin-course-list">
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="admin-cms-modal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:flex; align-items:center; justify-content:center;">
-        <div class="card" style="width:90%; height:90%; display:flex; flex-direction:column; background:white;">
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+                        <img src="wae-logo.jpg" alt="Logo" style="height:40px; border-radius:5px;">
+                        <span style="font-family:'Outfit'; font-weight:800; font-size:1.5rem; color:white;">WAE</span>
+                    </div>
+                    <p style="color:#9ca3af; line-height:1.6;">
+                        Empowering careers through premium training. We bridge the gap between academic theory and industry reality.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#" onclick="app.router.go('home'); return false;">Home</a></li>
+                        <li><a href="#" onclick="app.router.go('about'); return false;">About Us</a></li>
+                        <li><a href="#" onclick="app.router.go('courses'); return false;">All Courses</a></li>
+                        <li><a href="#" onclick="app.router.go('login'); return false;">Student Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul style="color:#9ca3af;">
+                        <li style="display:flex; gap:10px;"><span class="material-icons-round" style="font-size:18px;">email</span> info@winneracademy.com</li>
+                        <li style="display:flex; gap:10px;"><span class="material-icons-round" style="font-size:18px;">phone</span> +91 123 456 7890</li>
+                        <li style="display:flex; gap:10px;"><span class="material-icons-round" style="font-size:18px;">location_on</span> Jaipur, Rajasthan</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 Winner Academy of Excellence. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div id="admin-cms-modal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); z-index:2000; display:flex; align-items:center; justify-content:center;">
+        <div class="card" style="width:90%; height:90%; display:flex; flex-direction:column; background:white; border:none; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
             <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:20px;">
-                <h2>Edit Website Content</h2>
+                <h2 style="font-family:'Outfit';">Edit Website Content</h2>
                 <button class="btn btn-secondary" onclick="document.getElementById('admin-cms-modal').classList.add('hidden')">Close</button>
             </div>
-            <div style="flex-grow:1; overflow-y:auto; display:grid; grid-template-columns: 250px 1fr; gap:20px;">
+            <div style="flex-grow:1; overflow-y:auto; display:grid; grid-template-columns: 200px 1fr; gap:30px;">
                 <div style="border-right:1px solid var(--border); padding-right:20px;">
                     <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('home')">Home Page</button>
                     <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('about')">About Page</button>
                 </div>
-                <div id="cms-form-area">
+                <div id="cms-form-area" style="padding-right: 10px;">
                 </div>
             </div>
             <div style="padding-top:15px; border-top:1px solid var(--border); text-align:right;">
@@ -188,21 +337,21 @@
         </div>
     </div>
 
-    <div id="course-creator-modal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:flex; align-items:center; justify-content:center;">
-        <div class="card" style="width:800px; max-height:90vh; display:flex; flex-direction:column; background:white;">
+    <div id="course-creator-modal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); z-index:2000; display:flex; align-items:center; justify-content:center;">
+        <div class="card" style="width:800px; max-height:90vh; display:flex; flex-direction:column; background:white; border:none;">
             <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:20px;">
-                <h2 id="course-modal-title">Create/Edit Course</h2>
+                <h2 id="course-modal-title" style="font-family:'Outfit';">Create/Edit Course</h2>
                 <button class="btn btn-secondary" onclick="document.getElementById('course-creator-modal').classList.add('hidden')">Close</button>
             </div>
-            <div style="overflow-y:auto; padding-right:10px; flex-grow:1;">
+            <div style="overflow-y:auto; padding-right:15px; flex-grow:1;">
                 <input type="hidden" id="edit-course-id">
                 <div class="input-group"><label>Course Title</label><input type="text" id="new-course-title" class="form-input"></div>
                 <div class="input-group"><label>Description</label><textarea id="new-course-desc" class="form-input" rows="2"></textarea></div>
                 <div class="input-group"><label>Thumbnail URL (Image Link)</label><input type="text" id="new-course-thumb" class="form-input" placeholder="https://..."></div>
                 
-                <h3 style="margin:20px 0 10px;">Curriculum</h3>
+                <h3 style="margin:20px 0 10px; font-family:'Outfit'; color:var(--primary);">Curriculum Modules</h3>
                 <div id="new-course-modules"></div>
-                <button class="btn btn-secondary" style="width:100%; border:1px dashed var(--border);" onclick="app.admin.addModuleUI()">+ Add Module</button>
+                <button class="btn btn-secondary" style="width:100%; border:1px dashed var(--primary); color:var(--primary);" onclick="app.admin.addModuleUI()">+ Add Module</button>
             </div>
             <div style="padding-top:15px; border-top:1px solid var(--border); text-align:right;">
                 <button class="btn btn-primary" onclick="app.admin.saveNewCourse()">Save Course to Database</button>
@@ -212,7 +361,7 @@
 
     <script>
         const app = {
-            // *** IMPORTANT: PASTE YOUR DEPLOYED WEB APP URL HERE ***
+            // Your Connected Link is Preserved Here
             GAS_API_URL: 'https://script.google.com/macros/s/AKfycbx2qRAqozx8KYpb9JKx2HzvvBO4mBcbOsz9KoI5C2bPbARqUDK0ASCT7zMAOHFp8wRU/exec',
             
             state: { user: null, config: {}, courses: [] },
@@ -224,7 +373,7 @@
                 // Bindings
                 document.getElementById('nav-btn-home').onclick = () => this.router.go('home');
                 document.getElementById('nav-btn-about').onclick = () => this.router.go('about');
-                document.getElementById('nav-btn-courses').onclick = () => this.router.go('courses'); // NEW
+                document.getElementById('nav-btn-courses').onclick = () => this.router.go('courses'); 
                 document.getElementById('nav-btn-login').onclick = () => this.router.go('login');
                 document.getElementById('nav-btn-dashboard').onclick = () => {
                     this.state.user?.role === 'admin' ? this.router.go('admin-dash') : this.router.go('student-dash');
@@ -265,14 +414,12 @@
                 const cfg = this.state.config;
                 const courses = this.state.courses;
 
-                // 1. Render Home/About Text
                 if(cfg.homepageTitle) document.getElementById('hero-title').innerText = cfg.homepageTitle;
                 if(cfg.homepageText) document.getElementById('hero-text').innerText = cfg.homepageText;
                 if(cfg.homeSubHeading) document.getElementById('home-sub-heading-disp').innerText = cfg.homeSubHeading;
                 if(cfg.aboutVision) document.getElementById('vis-text-disp').innerText = cfg.aboutVision;
                 if(cfg.aboutHistory) document.getElementById('his-text-disp').innerText = cfg.aboutHistory;
                 
-                // 2. Render Courses (Both on Home and Courses Page)
                 const renderCourseCards = (listId) => {
                     const container = document.getElementById(listId);
                     if(courses.length === 0) {
@@ -281,10 +428,12 @@
                     }
                     container.innerHTML = courses.map(c => `
                         <div class="card course-card">
-                            ${c.thumbnail ? `<img src="${c.thumbnail}" onerror="this.style.display='none'">` : ''}
-                            <h3>${c.title}</h3>
-                            <p>${c.desc}</p>
-                            <button class="btn btn-secondary" onclick="alert('Please Login to Access this Course')">View Details</button>
+                            ${c.thumbnail ? `<img src="${c.thumbnail}" onerror="this.src='https://via.placeholder.com/400x200?text=WAE+Course'">` : '<div style="height:200px; background:#f1f5f9; display:flex; align-items:center; justify-content:center; color:#cbd5e1;">No Image</div>'}
+                            <div class="course-content">
+                                <h3>${c.title}</h3>
+                                <p>${c.desc}</p>
+                                <button class="btn btn-secondary" style="width:100%;" onclick="alert('Please Login to Access this Course')">View Details</button>
+                            </div>
                         </div>
                     `).join('');
                 };
@@ -292,17 +441,16 @@
                 renderCourseCards('course-list-home');
                 renderCourseCards('course-list-page');
 
-                // 3. Render Leadership
                 const founders = cfg.foundersJson ? JSON.parse(cfg.foundersJson) : [];
                 document.getElementById('founders-list-disp').innerHTML = founders.map(f => `
-                    <div class="card" style="display:flex; flex-direction:column; gap:15px; text-align:center; padding:30px;">
-                        <div style="width:80px; height:80px; background:#e2e8f0; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center;">
-                            <span class="material-icons-round" style="font-size:36px;">person</span>
+                    <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:30px;">
+                        <div style="width:90px; height:90px; background:var(--primary-light); border-radius:50%; margin-bottom:20px; display:flex; align-items:center; justify-content:center; color:var(--primary);">
+                            <span class="material-icons-round" style="font-size:40px;">person</span>
                         </div>
                         <div>
-                            <h4 style="font-size:1.2rem; margin-bottom:5px;">${f.name}</h4>
-                            <p style="color:var(--primary); font-size:0.9rem; font-weight:600; margin-bottom:15px;">${f.title}</p>
-                            <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.5;">${f.desc || ''}</p>
+                            <h4 style="font-size:1.3rem; margin-bottom:5px; font-family:'Outfit';">${f.name}</h4>
+                            <p style="color:var(--primary); font-size:0.9rem; font-weight:700; margin-bottom:15px; text-transform:uppercase; letter-spacing:1px;">${f.title}</p>
+                            <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.6;">${f.desc || ''}</p>
                         </div>
                     </div>
                 `).join('');
@@ -331,8 +479,11 @@
                 loadDashboard: function() {
                     const list = document.getElementById('admin-course-list');
                     list.innerHTML = app.state.courses.map(c => `
-                        <div class="card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                            <div><strong>${c.title}</strong></div>
+                        <div class="card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding:20px;">
+                            <div>
+                                <strong style="font-size:1.1rem;">${c.title}</strong>
+                                <div style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">${c.courseId}</div>
+                            </div>
                             <button class="btn btn-secondary" onclick='app.admin.openCourseCreator(${JSON.stringify(c)})'>Edit</button>
                         </div>
                     `).join('');
@@ -349,30 +500,29 @@
                     
                     if(tab === 'home') {
                         container.innerHTML = `
-                            <h3>Home Page</h3>
+                            <h3 style="font-family:'Outfit'; margin-bottom:15px;">Home Page</h3>
                             <div class="input-group"><label>Hero Title</label><input type="text" id="cms-home-title" class="form-input" value="${cfg.homepageTitle || ''}"></div>
-                            <div class="input-group"><label>Hero Text</label><textarea id="cms-home-text" class="form-input">${cfg.homepageText || ''}</textarea></div>
+                            <div class="input-group"><label>Hero Text</label><textarea id="cms-home-text" class="form-input" rows="3">${cfg.homepageText || ''}</textarea></div>
                             <div class="input-group"><label>Page Sub-Heading</label><input type="text" id="cms-home-sub" class="form-input" value="${cfg.homeSubHeading || ''}"></div>
                         `;
                     } else if(tab === 'about') {
                         const founders = cfg.foundersJson ? JSON.parse(cfg.foundersJson) : [];
-                        
                         const renderPersonInputs = (arr) => arr.map((p,i) => `
-                            <div class="card" style="margin-bottom:15px; padding:15px; border:1px solid var(--border);">
+                            <div class="card" style="margin-bottom:15px; padding:15px; border:1px solid var(--border); background:#f9fafb;">
                                 <div style="display:flex; gap:10px; margin-bottom:10px;">
-                                    <input type="text" class="form-input cms-f-name" value="${p.name}" placeholder="Name">
-                                    <input type="text" class="form-input cms-f-title" value="${p.title}" placeholder="Title">
+                                    <input type="text" class="form-input cms-f-name" value="${p.name}" placeholder="Name" style="margin:0;">
+                                    <input type="text" class="form-input cms-f-title" value="${p.title}" placeholder="Title" style="margin:0;">
                                 </div>
-                                <textarea class="form-input cms-f-desc" rows="3" placeholder="Description...">${p.desc || ''}</textarea>
+                                <textarea class="form-input cms-f-desc" rows="3" placeholder="Description..." style="margin:0;">${p.desc || ''}</textarea>
                             </div>
                         `).join('');
 
                         container.innerHTML = `
-                            <h3>About Page</h3>
-                            <div class="input-group"><label>Vision Text</label><textarea id="cms-vis-text" class="form-input">${cfg.aboutVision || ''}</textarea></div>
-                            <div class="input-group"><label>History Text</label><textarea id="cms-his-text" class="form-input">${cfg.aboutHistory || ''}</textarea></div>
+                            <h3 style="font-family:'Outfit'; margin-bottom:15px;">About Page</h3>
+                            <div class="input-group"><label>Vision Text</label><textarea id="cms-vis-text" class="form-input" rows="3">${cfg.aboutVision || ''}</textarea></div>
+                            <div class="input-group"><label>History Text</label><textarea id="cms-his-text" class="form-input" rows="3">${cfg.aboutHistory || ''}</textarea></div>
                             
-                            <h4 style="margin-top:20px;">Leadership Team</h4>
+                            <h4 style="margin-top:20px; font-family:'Outfit';">Leadership Team</h4>
                             <div id="cms-founders-list">${renderPersonInputs(founders)}</div>
                         `;
                     }
@@ -380,13 +530,11 @@
 
                 saveWebsiteChanges: function() {
                     const items = [];
-                    // Gather Home Data
                     if(document.getElementById('cms-home-title')) {
                         items.push({key: 'homepageTitle', value: document.getElementById('cms-home-title').value});
                         items.push({key: 'homepageText', value: document.getElementById('cms-home-text').value});
                         items.push({key: 'homeSubHeading', value: document.getElementById('cms-home-sub').value});
                     }
-                    // Gather About Data
                     if(document.getElementById('cms-vis-text')) {
                         items.push({key: 'aboutVision', value: document.getElementById('cms-vis-text').value});
                         items.push({key: 'aboutHistory', value: document.getElementById('cms-his-text').value});
@@ -411,7 +559,6 @@
                     });
                 },
 
-                // Course Creator Logic
                 openCourseCreator: function(courseObj = null) {
                     const modal = document.getElementById('course-creator-modal');
                     modal.classList.remove('hidden');
@@ -435,18 +582,18 @@
 
                 addModuleUI: function() {
                     const html = `
-                    <div class="card module-item" style="padding:15px; margin-bottom:10px;">
-                        <input type="text" class="form-input mod-title" placeholder="Module Title">
-                        <div class="lessons-area" style="margin-left:20px; border-left:2px solid var(--border); padding-left:10px;"></div>
-                        <button class="btn btn-secondary" onclick="app.admin.addLessonUI(this)">+ Add Lesson</button>
+                    <div class="card module-item" style="padding:15px; margin-bottom:15px; border-left:3px solid var(--primary);">
+                        <input type="text" class="form-input mod-title" placeholder="Module Title" style="font-weight:600;">
+                        <div class="lessons-area" style="margin-left:15px; padding-left:15px; border-left:1px dashed var(--border);"></div>
+                        <button class="btn btn-secondary" style="font-size:0.8rem;" onclick="app.admin.addLessonUI(this)">+ Add Lesson</button>
                     </div>`;
                     document.getElementById('new-course-modules').insertAdjacentHTML('beforeend', html);
                 },
 
                 addLessonUI: function(btn) {
-                    const html = `<div class="lesson-item" style="display:flex; gap:5px; margin-top:5px;">
-                        <input type="text" class="form-input less-title" placeholder="Lesson Title">
-                        <input type="text" class="form-input less-url" placeholder="Video/PDF URL">
+                    const html = `<div class="lesson-item" style="display:flex; gap:10px; margin-top:10px;">
+                        <input type="text" class="form-input less-title" placeholder="Lesson Title" style="margin:0;">
+                        <input type="text" class="form-input less-url" placeholder="Video/PDF URL" style="margin:0;">
                     </div>`;
                     btn.previousElementSibling.insertAdjacentHTML('beforeend', html);
                 },
@@ -457,7 +604,6 @@
                     const thumb = document.getElementById('new-course-thumb').value;
                     const id = document.getElementById('edit-course-id').value;
 
-                    // Scrape Modules
                     const mods = [];
                     document.querySelectorAll('.module-item').forEach((m, i) => {
                         const mTitle = m.querySelector('.mod-title').value;
@@ -483,7 +629,7 @@
                         if(res && res.status === 'success') {
                             alert('Course Saved!');
                             document.getElementById('course-creator-modal').classList.add('hidden');
-                            location.reload(); // Refresh to show new course immediately
+                            location.reload(); 
                         }
                     });
                 }

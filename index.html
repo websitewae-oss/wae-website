@@ -75,26 +75,26 @@
             background: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(12px); 
             border-bottom: 1px solid var(--border); 
-            padding: 15px 0; 
+            padding: 10px 0; /* Slightly reduced padding for larger logo balance */
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         .nav-flex { display: flex; justify-content: space-between; align-items: center; }
         
         .logo { 
-            font-family: 'Outfit', sans-serif; 
-            font-size: 1.8rem; 
-            font-weight: 800; 
-            color: var(--text-main);
             display: flex; 
             align-items: center; 
             gap: 15px; 
             text-decoration: none;
         }
-        /* Bigger Logo */
-        .logo img { height: 60px; border-radius: 8px; box-shadow: var(--shadow); }
-        .logo span { background: linear-gradient(90deg, var(--primary) 0%, #be185d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* MODIFIED LOGO STYLE */
+        .logo img { 
+            height: 90px; /* Increased height */
+            width: auto;  /* Allows width to scale naturally (wider) */
+            border-radius: 8px; 
+            /* box-shadow: var(--shadow); removed shadow for cleaner big logo look if transparent */
+        }
 
-        nav { display: flex; gap: 10px; }
+        nav { display: flex; gap: 10px; align-items: center; }
         
         @media (max-width: 900px) {
             nav { display: none; } /* Mobile menu simplified for now */
@@ -143,6 +143,11 @@
         .course-content { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
         .course-card h3 { margin-bottom: 12px; font-family: 'Outfit', sans-serif; font-size: 1.25rem; color: var(--text-main); }
         .course-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+
+        /* CONTACT GRID */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .contact-card { text-align: center; padding: 40px 24px; }
+        .contact-icon { width: 60px; height: 60px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--primary); }
 
         /* IMPACT & EVENTS SPECIFIC */
         .date-badge {
@@ -193,14 +198,14 @@
         <div class="container nav-flex">
             <a href="#" class="logo" onclick="app.router.go('home'); return false;">
                 <img src="wae-logo.jpg" alt="WAE Logo"> 
-                <span>WAE</span>
-            </a>
+                </a>
             <nav>
                 <button id="nav-btn-home" class="btn btn-secondary" style="border:none;">Home</button>
                 <button id="nav-btn-about" class="btn btn-secondary" style="border:none;">About</button>
                 <button id="nav-btn-impact" class="btn btn-secondary" style="border:none;">Impact Stories</button>
                 <button id="nav-btn-events" class="btn btn-secondary" style="border:none;">Events</button>
                 <button id="nav-btn-courses" class="btn btn-secondary" style="border:none;">Courses</button> 
+                <button id="nav-btn-contact" class="btn btn-secondary" style="border:none;">Contact</button>
                 <button id="nav-btn-login" class="btn btn-primary" style="margin-left:10px;">Login</button>
                 <button id="nav-btn-dashboard" class="btn btn-primary hidden" style="margin-left:10px;">Dashboard</button>
                 <button id="nav-btn-logout" class="btn btn-secondary hidden" style="border:none; color:red;">Logout</button>
@@ -238,6 +243,30 @@
             </div>
             <div class="course-grid" id="course-list-page">
                 <div class="card"><h3>Loading...</h3></div>
+            </div>
+        </section>
+
+        <section id="view-contact" class="container hidden" style="padding-top:40px;">
+            <div style="text-align:center; max-width:800px; margin:0 auto 40px;">
+                <h1 style="font-family:'Outfit'; font-size:3rem; margin-bottom:10px;">Contact Us</h1>
+                <p style="color:var(--text-muted); font-size:1.1rem;">Visit our offices across India.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="card contact-card">
+                    <div class="contact-icon"><span class="material-icons-round" style="font-size:30px;">location_city</span></div>
+                    <h3 style="font-family:'Outfit'; margin-bottom:15px; font-size:1.5rem;">New Delhi</h3>
+                    <p style="color:var(--text-muted); line-height:1.6; white-space: pre-line;" id="contact-delhi-disp">Loading...</p>
+                </div>
+                <div class="card contact-card">
+                    <div class="contact-icon"><span class="material-icons-round" style="font-size:30px;">storefront</span></div>
+                    <h3 style="font-family:'Outfit'; margin-bottom:15px; font-size:1.5rem;">Jaipur</h3>
+                    <p style="color:var(--text-muted); line-height:1.6; white-space: pre-line;" id="contact-jaipur-disp">Loading...</p>
+                </div>
+                <div class="card contact-card">
+                    <div class="contact-icon"><span class="material-icons-round" style="font-size:30px;">business</span></div>
+                    <h3 style="font-family:'Outfit'; margin-bottom:15px; font-size:1.5rem;">Pune</h3>
+                    <p style="color:var(--text-muted); line-height:1.6; white-space: pre-line;" id="contact-pune-disp">Loading...</p>
+                </div>
             </div>
         </section>
 
@@ -373,6 +402,7 @@
                 <div style="border-right:1px solid var(--border); padding-right:20px;">
                     <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('home')">Home Page</button>
                     <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('about')">About Page</button>
+                    <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('contact')">Contact Page</button>
                     <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('impact')">Impact Stories</button>
                     <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('events')">Events</button>
                 </div>
@@ -422,6 +452,7 @@
                 document.getElementById('nav-btn-home').onclick = () => this.router.go('home');
                 document.getElementById('nav-btn-about').onclick = () => this.router.go('about');
                 document.getElementById('nav-btn-courses').onclick = () => this.router.go('courses'); 
+                document.getElementById('nav-btn-contact').onclick = () => this.router.go('contact');
                 document.getElementById('nav-btn-impact').onclick = () => this.router.go('impact');
                 document.getElementById('nav-btn-events').onclick = () => this.router.go('events');
 
@@ -473,6 +504,11 @@
                 // About
                 if(cfg.aboutVision) document.getElementById('vis-text-disp').innerText = cfg.aboutVision;
                 if(cfg.aboutHistory) document.getElementById('his-text-disp').innerText = cfg.aboutHistory;
+
+                // Contact
+                if(cfg.contactDelhi) document.getElementById('contact-delhi-disp').innerText = cfg.contactDelhi;
+                if(cfg.contactJaipur) document.getElementById('contact-jaipur-disp').innerText = cfg.contactJaipur;
+                if(cfg.contactPune) document.getElementById('contact-pune-disp').innerText = cfg.contactPune;
                 
                 // Impact Stories
                 const impacts = cfg.impactJson ? JSON.parse(cfg.impactJson) : [];
@@ -585,6 +621,13 @@
                             <div class="input-group"><label>Hero Text</label><textarea id="cms-home-text" class="form-input" rows="3">${cfg.homepageText || ''}</textarea></div>
                             <div class="input-group"><label>Page Sub-Heading</label><input type="text" id="cms-home-sub" class="form-input" value="${cfg.homeSubHeading || ''}"></div>
                         `;
+                    } else if (tab === 'contact') {
+                         container.innerHTML = `
+                            <h3 style="font-family:'Outfit'; margin-bottom:15px;">Contact Addresses</h3>
+                            <div class="input-group"><label>New Delhi Office</label><textarea id="cms-contact-delhi" class="form-input" rows="3">${cfg.contactDelhi || ''}</textarea></div>
+                            <div class="input-group"><label>Jaipur Office</label><textarea id="cms-contact-jaipur" class="form-input" rows="3">${cfg.contactJaipur || ''}</textarea></div>
+                            <div class="input-group"><label>Pune Office</label><textarea id="cms-contact-pune" class="form-input" rows="3">${cfg.contactPune || ''}</textarea></div>
+                        `;
                     } else if(tab === 'about') {
                         const founders = cfg.foundersJson ? JSON.parse(cfg.foundersJson) : [];
                         const renderPersonInputs = (arr) => arr.map((p,i) => `
@@ -685,6 +728,13 @@
                         items.push({key: 'homepageTitle', value: document.getElementById('cms-home-title').value});
                         items.push({key: 'homepageText', value: document.getElementById('cms-home-text').value});
                         items.push({key: 'homeSubHeading', value: document.getElementById('cms-home-sub').value});
+                    }
+
+                    // Contact Page Data
+                    if(document.getElementById('cms-contact-delhi')) {
+                        items.push({key: 'contactDelhi', value: document.getElementById('cms-contact-delhi').value});
+                        items.push({key: 'contactJaipur', value: document.getElementById('cms-contact-jaipur').value});
+                        items.push({key: 'contactPune', value: document.getElementById('cms-contact-pune').value});
                     }
 
                     // About Page Data

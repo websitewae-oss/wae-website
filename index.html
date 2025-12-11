@@ -95,6 +95,10 @@
         .logo span { background: linear-gradient(90deg, var(--primary) 0%, #be185d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         nav { display: flex; gap: 10px; }
+        
+        @media (max-width: 900px) {
+            nav { display: none; } /* Mobile menu simplified for now */
+        }
 
         /* CARDS */
         .card { 
@@ -140,6 +144,26 @@
         .course-card h3 { margin-bottom: 12px; font-family: 'Outfit', sans-serif; font-size: 1.25rem; color: var(--text-main); }
         .course-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
 
+        /* IMPACT & EVENTS SPECIFIC */
+        .date-badge {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .location-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
         /* FORMS */
         .form-input { 
             width: 100%; padding: 12px; 
@@ -174,6 +198,8 @@
             <nav>
                 <button id="nav-btn-home" class="btn btn-secondary" style="border:none;">Home</button>
                 <button id="nav-btn-about" class="btn btn-secondary" style="border:none;">About</button>
+                <button id="nav-btn-impact" class="btn btn-secondary" style="border:none;">Impact Stories</button>
+                <button id="nav-btn-events" class="btn btn-secondary" style="border:none;">Events</button>
                 <button id="nav-btn-courses" class="btn btn-secondary" style="border:none;">Courses</button> 
                 <button id="nav-btn-login" class="btn btn-primary" style="margin-left:10px;">Login</button>
                 <button id="nav-btn-dashboard" class="btn btn-primary hidden" style="margin-left:10px;">Dashboard</button>
@@ -212,6 +238,26 @@
             </div>
             <div class="course-grid" id="course-list-page">
                 <div class="card"><h3>Loading...</h3></div>
+            </div>
+        </section>
+
+        <section id="view-impact" class="container hidden" style="padding-top:40px;">
+            <div style="text-align:center; max-width:800px; margin:0 auto 40px;">
+                <h1 style="font-family:'Outfit'; font-size:3rem; margin-bottom:10px;">Impact Stories</h1>
+                <p style="color:var(--text-muted); font-size:1.1rem;">Real results from our partner colleges and students.</p>
+            </div>
+            <div class="course-grid" id="impact-list-disp">
+                <div class="card">Loading Stories...</div>
+            </div>
+        </section>
+
+        <section id="view-events" class="container hidden" style="padding-top:40px;">
+            <div style="text-align:center; max-width:800px; margin:0 auto 40px;">
+                <h1 style="font-family:'Outfit'; font-size:3rem; margin-bottom:10px;">Upcoming Events</h1>
+                <p style="color:var(--text-muted); font-size:1.1rem;">Join us for workshops, seminars, and job fairs.</p>
+            </div>
+            <div class="course-grid" id="events-list-disp">
+                <div class="card">Loading Events...</div>
             </div>
         </section>
 
@@ -327,6 +373,8 @@
                 <div style="border-right:1px solid var(--border); padding-right:20px;">
                     <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('home')">Home Page</button>
                     <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('about')">About Page</button>
+                    <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('impact')">Impact Stories</button>
+                    <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:10px;" onclick="app.admin.renderCMSTab('events')">Events</button>
                 </div>
                 <div id="cms-form-area" style="padding-right: 10px;">
                 </div>
@@ -361,7 +409,7 @@
 
     <script>
         const app = {
-            // Your Connected Link is Preserved Here
+            // Your Connected Link
             GAS_API_URL: 'https://script.google.com/macros/s/AKfycbx2qRAqozx8KYpb9JKx2HzvvBO4mBcbOsz9KoI5C2bPbARqUDK0ASCT7zMAOHFp8wRU/exec',
             
             state: { user: null, config: {}, courses: [] },
@@ -374,6 +422,9 @@
                 document.getElementById('nav-btn-home').onclick = () => this.router.go('home');
                 document.getElementById('nav-btn-about').onclick = () => this.router.go('about');
                 document.getElementById('nav-btn-courses').onclick = () => this.router.go('courses'); 
+                document.getElementById('nav-btn-impact').onclick = () => this.router.go('impact');
+                document.getElementById('nav-btn-events').onclick = () => this.router.go('events');
+
                 document.getElementById('nav-btn-login').onclick = () => this.router.go('login');
                 document.getElementById('nav-btn-dashboard').onclick = () => {
                     this.state.user?.role === 'admin' ? this.router.go('admin-dash') : this.router.go('student-dash');
@@ -414,12 +465,40 @@
                 const cfg = this.state.config;
                 const courses = this.state.courses;
 
+                // Home
                 if(cfg.homepageTitle) document.getElementById('hero-title').innerText = cfg.homepageTitle;
                 if(cfg.homepageText) document.getElementById('hero-text').innerText = cfg.homepageText;
                 if(cfg.homeSubHeading) document.getElementById('home-sub-heading-disp').innerText = cfg.homeSubHeading;
+                
+                // About
                 if(cfg.aboutVision) document.getElementById('vis-text-disp').innerText = cfg.aboutVision;
                 if(cfg.aboutHistory) document.getElementById('his-text-disp').innerText = cfg.aboutHistory;
                 
+                // Impact Stories
+                const impacts = cfg.impactJson ? JSON.parse(cfg.impactJson) : [];
+                document.getElementById('impact-list-disp').innerHTML = impacts.map(i => `
+                    <div class="card">
+                        ${i.date ? `<span class="date-badge">${i.date}</span>` : ''}
+                        <h3 style="font-family:'Outfit'; font-size:1.3rem; margin-top:5px;">${i.title}</h3>
+                        <p style="color:var(--text-muted); margin-top:10px; line-height:1.6;">${i.desc}</p>
+                    </div>
+                `).join('');
+
+                // Events
+                const events = cfg.eventsJson ? JSON.parse(cfg.eventsJson) : [];
+                document.getElementById('events-list-disp').innerHTML = events.map(e => `
+                    <div class="card">
+                        <div style="display:flex; justify-content:space-between; align-items:start;">
+                            <span class="date-badge">${e.date}</span>
+                        </div>
+                        <h3 style="font-family:'Outfit'; font-size:1.3rem;">${e.title}</h3>
+                        <div class="location-row"><span class="material-icons-round" style="font-size:18px;">location_on</span> ${e.location}</div>
+                        <p style="color:var(--text-muted); margin-top:15px; line-height:1.6;">${e.desc}</p>
+                        <button class="btn btn-primary" style="width:100%; margin-top:20px; font-size:0.9rem;">Register Now</button>
+                    </div>
+                `).join('');
+
+                // Courses
                 const renderCourseCards = (listId) => {
                     const container = document.getElementById(listId);
                     if(courses.length === 0) {
@@ -441,6 +520,7 @@
                 renderCourseCards('course-list-home');
                 renderCourseCards('course-list-page');
 
+                // Founders
                 const founders = cfg.foundersJson ? JSON.parse(cfg.foundersJson) : [];
                 document.getElementById('founders-list-disp').innerHTML = founders.map(f => `
                     <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:30px;">
@@ -514,6 +594,7 @@
                                     <input type="text" class="form-input cms-f-title" value="${p.title}" placeholder="Title" style="margin:0;">
                                 </div>
                                 <textarea class="form-input cms-f-desc" rows="3" placeholder="Description..." style="margin:0;">${p.desc || ''}</textarea>
+                                <button class="btn btn-secondary" style="font-size:0.8rem; color:red; margin-top:5px;" onclick="this.parentElement.remove()">Remove Person</button>
                             </div>
                         `).join('');
 
@@ -524,17 +605,89 @@
                             
                             <h4 style="margin-top:20px; font-family:'Outfit';">Leadership Team</h4>
                             <div id="cms-founders-list">${renderPersonInputs(founders)}</div>
+                            <button class="btn btn-secondary" onclick="app.admin.addListItem('cms-founders-list', 'person')">+ Add Leader</button>
+                        `;
+                    } else if (tab === 'impact') {
+                        const impacts = cfg.impactJson ? JSON.parse(cfg.impactJson) : [];
+                        const renderImpacts = (arr) => arr.map(i => `
+                            <div class="card" style="margin-bottom:15px; padding:15px; border:1px solid var(--border); background:#f9fafb;">
+                                <div class="input-group"><label>Title</label><input type="text" class="form-input cms-i-title" value="${i.title}" style="margin:0;"></div>
+                                <div class="input-group" style="margin-top:10px;"><label>Date</label><input type="text" class="form-input cms-i-date" value="${i.date}" style="margin:0;"></div>
+                                <div class="input-group" style="margin-top:10px;"><label>Description</label><textarea class="form-input cms-i-desc" rows="2" style="margin:0;">${i.desc || ''}</textarea></div>
+                                <button class="btn btn-secondary" style="font-size:0.8rem; color:red; margin-top:10px;" onclick="this.parentElement.remove()">Remove Story</button>
+                            </div>
+                        `).join('');
+
+                        container.innerHTML = `
+                            <h3 style="font-family:'Outfit'; margin-bottom:15px;">Impact Stories</h3>
+                            <div id="cms-impact-list">${renderImpacts(impacts)}</div>
+                            <button class="btn btn-secondary" onclick="app.admin.addListItem('cms-impact-list', 'impact')">+ Add Story</button>
+                        `;
+                    } else if (tab === 'events') {
+                        const events = cfg.eventsJson ? JSON.parse(cfg.eventsJson) : [];
+                        const renderEvents = (arr) => arr.map(e => `
+                            <div class="card" style="margin-bottom:15px; padding:15px; border:1px solid var(--border); background:#f9fafb;">
+                                <div class="input-group"><label>Title</label><input type="text" class="form-input cms-e-title" value="${e.title}" style="margin:0;"></div>
+                                <div style="display:flex; gap:10px; margin-top:10px;">
+                                    <div style="flex:1"><label>Date</label><input type="text" class="form-input cms-e-date" value="${e.date}" style="margin:0;"></div>
+                                    <div style="flex:1"><label>Location</label><input type="text" class="form-input cms-e-loc" value="${e.location}" style="margin:0;"></div>
+                                </div>
+                                <div class="input-group" style="margin-top:10px;"><label>Description</label><textarea class="form-input cms-e-desc" rows="2" style="margin:0;">${e.desc || ''}</textarea></div>
+                                <button class="btn btn-secondary" style="font-size:0.8rem; color:red; margin-top:10px;" onclick="this.parentElement.remove()">Remove Event</button>
+                            </div>
+                        `).join('');
+
+                        container.innerHTML = `
+                            <h3 style="font-family:'Outfit'; margin-bottom:15px;">Upcoming Events</h3>
+                            <div id="cms-events-list">${renderEvents(events)}</div>
+                            <button class="btn btn-secondary" onclick="app.admin.addListItem('cms-events-list', 'event')">+ Add Event</button>
                         `;
                     }
                 },
 
+                addListItem: function(containerId, type) {
+                    let html = '';
+                    if(type === 'person') {
+                        html = `<div class="card" style="margin-bottom:15px; padding:15px; border:1px solid var(--border); background:#f9fafb;">
+                                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                    <input type="text" class="form-input cms-f-name" placeholder="Name" style="margin:0;">
+                                    <input type="text" class="form-input cms-f-title" placeholder="Title" style="margin:0;">
+                                </div>
+                                <textarea class="form-input cms-f-desc" rows="3" placeholder="Description..." style="margin:0;"></textarea>
+                                <button class="btn btn-secondary" style="font-size:0.8rem; color:red; margin-top:5px;" onclick="this.parentElement.remove()">Remove Person</button>
+                            </div>`;
+                    } else if (type === 'impact') {
+                        html = `<div class="card" style="margin-bottom:15px; padding:15px; border:1px solid var(--border); background:#f9fafb;">
+                                <div class="input-group"><label>Title</label><input type="text" class="form-input cms-i-title" style="margin:0;"></div>
+                                <div class="input-group" style="margin-top:10px;"><label>Date</label><input type="text" class="form-input cms-i-date" style="margin:0;"></div>
+                                <div class="input-group" style="margin-top:10px;"><label>Description</label><textarea class="form-input cms-i-desc" rows="2" style="margin:0;"></textarea></div>
+                                <button class="btn btn-secondary" style="font-size:0.8rem; color:red; margin-top:10px;" onclick="this.parentElement.remove()">Remove Story</button>
+                            </div>`;
+                    } else if (type === 'event') {
+                        html = `<div class="card" style="margin-bottom:15px; padding:15px; border:1px solid var(--border); background:#f9fafb;">
+                                <div class="input-group"><label>Title</label><input type="text" class="form-input cms-e-title" style="margin:0;"></div>
+                                <div style="display:flex; gap:10px; margin-top:10px;">
+                                    <div style="flex:1"><label>Date</label><input type="text" class="form-input cms-e-date" style="margin:0;"></div>
+                                    <div style="flex:1"><label>Location</label><input type="text" class="form-input cms-e-loc" style="margin:0;"></div>
+                                </div>
+                                <div class="input-group" style="margin-top:10px;"><label>Description</label><textarea class="form-input cms-e-desc" rows="2" style="margin:0;"></textarea></div>
+                                <button class="btn btn-secondary" style="font-size:0.8rem; color:red; margin-top:10px;" onclick="this.parentElement.remove()">Remove Event</button>
+                            </div>`;
+                    }
+                    document.getElementById(containerId).insertAdjacentHTML('beforeend', html);
+                },
+
                 saveWebsiteChanges: function() {
                     const items = [];
+                    
+                    // Home Page Data
                     if(document.getElementById('cms-home-title')) {
                         items.push({key: 'homepageTitle', value: document.getElementById('cms-home-title').value});
                         items.push({key: 'homepageText', value: document.getElementById('cms-home-text').value});
                         items.push({key: 'homeSubHeading', value: document.getElementById('cms-home-sub').value});
                     }
+
+                    // About Page Data
                     if(document.getElementById('cms-vis-text')) {
                         items.push({key: 'aboutVision', value: document.getElementById('cms-vis-text').value});
                         items.push({key: 'aboutHistory', value: document.getElementById('cms-his-text').value});
@@ -549,6 +702,36 @@
                             desc: fDescs[i].value
                         }));
                         items.push({key: 'foundersJson', value: JSON.stringify(fData)});
+                    }
+
+                    // Impact Stories Data
+                    if(document.getElementById('cms-impact-list')) {
+                        const iTitles = document.querySelectorAll('.cms-i-title');
+                        const iDates = document.querySelectorAll('.cms-i-date');
+                        const iDescs = document.querySelectorAll('.cms-i-desc');
+
+                        const iData = Array.from(iTitles).map((el, i) => ({
+                            title: el.value,
+                            date: iDates[i].value,
+                            desc: iDescs[i].value
+                        }));
+                        items.push({key: 'impactJson', value: JSON.stringify(iData)});
+                    }
+
+                    // Events Data
+                    if(document.getElementById('cms-events-list')) {
+                        const eTitles = document.querySelectorAll('.cms-e-title');
+                        const eDates = document.querySelectorAll('.cms-e-date');
+                        const eLocs = document.querySelectorAll('.cms-e-loc');
+                        const eDescs = document.querySelectorAll('.cms-e-desc');
+
+                        const eData = Array.from(eTitles).map((el, i) => ({
+                            title: el.value,
+                            date: eDates[i].value,
+                            location: eLocs[i].value,
+                            desc: eDescs[i].value
+                        }));
+                        items.push({key: 'eventsJson', value: JSON.stringify(eData)});
                     }
 
                     app.callApi('saveWebsiteContent', { items: items }, 'POST').then(res => {
